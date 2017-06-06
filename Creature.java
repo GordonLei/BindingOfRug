@@ -6,8 +6,8 @@ public abstract class Creature{
         /*
         public void talk(){
         System.out.println("hyillo is me kyirmit");
-}
-*/
+        }
+        */
         public Creature(int health, int speed, int attack, String dir){
                 _health = health;
                 _speed = speed;
