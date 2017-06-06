@@ -1,0 +1,28 @@
+Rug:
+
+Data structures:
+    - Multiple floors --> Stack of priority queues
+        - For individual rooms --> priority queues
+            - Boss Rooms have most priortiy
+            - basic rooms have low priority
+
+Game --> stack
+    FLoor --> Priority Queue
+        Room --> 2d Array of Tile
+Classes:
+    - Dood class:
+        -
+    - BadeeDood interface:
+        - Different types possibly (end goal)
+        - Boss class
+        - Goon class
+    - Player class:
+    - Floor class --> makes priorityqueues
+    - Room class --> randomly generated ==> 2d arrays room
+
+    - if possible items that increase player skill
+
+Processeing if we want to do it (aka Jawoodle the Noodle does it):
+
+Dank Meme section:
+    - dAB simulator from Konami Code
