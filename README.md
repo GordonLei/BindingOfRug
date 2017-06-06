@@ -3,8 +3,11 @@ Rouge played in terminal / console
 
 # Bugs / Possible Errors
 Depending on what OS you are using, the terminal / command prompt / console may act strangely due to code not necessarily working for that OS.
-  Ex) Emptying the console only works in Linux / Macs
-  Ex) ASCII / unicode characters may not work depending on the OS
+
+
+Ex) Emptying the console only works in Linux / Macs
+
+Ex) ASCII / unicode characters may not work depending on the OS
 
 # How to Play
 1. Javac BindingOfRug.java before doing anything else.
