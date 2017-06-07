@@ -1,5 +1,5 @@
-import Java.util.Scanner;
-import Java.util.Stack;
+import java.util.Scanner;
+import java.util.Stack;
 
 public class Room{
         //Instance variables
@@ -7,33 +7,32 @@ public class Room{
         private Tile _playerTile;
         private int _row;
         private int _col;
-        //private Monster _monster;
         private Player _player;
         private boolean _isDone; //to check if room is completed.
-        private Stack _monsterStack;
+        private ArrayQueue _monsterQueue; //a queue of multiple or one monster
 
         //constructor for a not same dimension room (length != width)
-        private Room(int row, int column){
+        public Room(int row, int column){
                 //creates new player
                 _player = new Player();
                 _playerTile = new Tile(_player, 0,0);
-                //create a new monster
-                _monsterStack = new Stack();
-                for (int i = 0; i < 1 + (int) (Math.random() * 3); i++){
+                //create a new monster(s)
+                _monsterQueue = new ArrayQueue(1 + (int) (Math.random() * 3));
+                for (int i = 0; i <  _monsterQueue.size(); i++){
                         Monster enemy = new Monster();
-                        _monsterStack.add(enemy);
+                        _monsterQueue.enqueue(enemy);
                 }
                 //creates the room
-                _room = new Title[row][column];
+                _room = new Tile[row][column];
                 //just some holder variables
                 _row = row;
                 _col = column;
                 _isDone = false;
 
-                //creates the panel
+                //creates the room
                 for(int r = 0; r < _room.length; r++){
                         for(int c = 0; c < _room[r].length; c++){
-                                _room[r][c] = new Title(row, col);
+                                _room[r][c] = new Tile(r,c);
                         }
                 }
         }
@@ -44,18 +43,21 @@ public class Room{
                 _player = new Player();
                 _playerTile = new Tile(_player, 0,0);
                 //create a new monster
-                _monsterStack = new Stack();
-                for (int i = 0; i < 1 + (int) (Math.random() * 3); i++){
+                _monsterQueue = new ArrayQueue(1 + (int) (Math.random() * 3));
+                //creates the queue of monsters
+                for (int i = 0; i < _monsterQueue.size(); i++){
                         Monster enemy = new Monster();
-                        _monsterStack.add(enemy);
+                        _monsterQueue.enqueue(enemy);
                 }
-                _row = row;
-                _col = column;
-                _room = new String[square][square];
+                //some holder variables
+                _row = square;
+                _col = square;
+                _room = new Tile[square][square];
                 _isDone = false;
+                //put Tiles into the _room
                 for(int r = 0; r < _room.length; r++){
                         for(int c = 0; c < _room[r].length; c++){
-                                _room[r][c] = new Tile();
+                                _room[r][c] = new Tile(r,c);
                         }
                 }
         }
@@ -64,19 +66,23 @@ public class Room{
         public void print(){
                 for(Tile[] row : _room){
                         for(Tile pos: row){
-                                Sytem.out.print(pos.checkType());
+                                System.out.print(pos.getChar());
                         }
                         System.out.println();
                 }
         }
 
+        //get player
+        public Player getPlayer(){
+                return _player;
+        }
         //update the current Player stats into the room.
         public void updatePlayer(Player player){
                 _player = player;
         }
 
         //return if the Room is done.
-        public void checkDone(){
+        public Boolean checkDone(){
                 return _isDone;
         }
 
@@ -89,74 +95,75 @@ public class Room{
                         //If not loop again3
                 while (input.indexOf("wasd") < 0){
                         System.out.println("Invalid direction. Input a direction as w,a,s,or d.");
-                        String input = s.next();
-                        //checkMove(_player.getChar(), input);
-                        //MORE CODE
+                        input = s.next();;
                 }
-                checkMove(_player.getChar(), input);
+                checkMove(input);
         }
 
         /*
         CHANGE TILES THING
         */
         public void checkMove(String input){
-                String dir = player.getChar();
+                String dir = _playerTile.getChar();
                 int row = _playerTile.getRow();
                 int col = _playerTile.getCol();
-                if (dir.equals("↑")){
+                if(input.indexOf("c") == 0){
+                        ((Player)(_room[row][col].getEntity())).setDir(input.substring(1,2));
+                }
+                else if (dir.equals("↑")){
                         if (input.equals("w")){
-                                move(Tile[row][_col], Tile[row - 1][col]);
+                                move(_room[row][_col], _room[row - 1][col]);
                         }
                         else if (input.equals("a")){
-                                move(Tile[row][col], Tile[row][col - 1]);
+                                move(_room[row][col], _room[row][col - 1]);
                         }
                         else if(input.equals("s")){
-                                move(Tile[row][col], Tile[row + 1][col]);
+                                move(_room[row][col], _room[row + 1][col]);
                         }
                         else{ //when input is "d"
-                                move(Tile[row][col], Tile[row][col + 1]);
+                                move(_room[row][col], _room[row][col + 1]);
                         }
                 }
                 else if (dir.equals("↓")){
                         if (input.equals("w")){
-                                move(Tile[row][col], Tile[row + 1][col]);
+                                move(_room[row][col], _room[row + 1][col]);
                         }
                         else if (input.equals("a")){
-                                move(Tile[row][col], Tile[row][col - 1]);
+                                move(_room[row][col], _room[row][col - 1]);
                         }
                         else if(input.equals("s")){
-                                move(Tile[row][col], Tile[row - 1][col]);
+                                move(_room[row][col], _room[row - 1][col]);
                         }
                         else{ //when input is "d"
-                                move(Tile[row][col], Tile[row][col + 1]);
+                                move(_room[row][col], _room[row][col + 1]);
                         }
                 }
                 else if(dir.equals("→")){
                         if (input.equals("w")){
-                                move(Tile[row][col], Tile[row][col + 1]);
+                                move(_room[row][col], _room[row][col + 1]);
                         }
                         else if (input.equals("a")){
-                                move(Tile[row][col], Tile[row - 1][col]);
+                                move(_room[row][col], _room[row - 1][col]);
                         }
                         else if(input.equals("s")){
-                                move(Tile[row][col], Tile[row][col - 1]);
+                                move(_room[row][col], _room[row][col - 1]);
                         }
                         else{ //when input is "d"
-                                move(Tile[row][col], Tile[row + 1][col]);
+                                move(_room[row][col], _room[row + 1][col]);
                         }
                 }
                 else { //when dir is ←
                         if (input.equals("w")){
-                                move(Tile[row][col], Tile[row][col - 1]);
+                                move(_room[row][col], _room[row][col - 1]);
                         }
                         else if (input.equals("a")){
-                                move(Tile[row][col], Tile[row + 1][col]);
+                                move(_room[row][col], _room[row + 1][col]);
                         }
                         else if(input.equals("s")){
-                                move(Tile[row][col], Tile[row - 1][col]);
+                                move(_room[row][col], _room[row - 1][col]);
                         }
                         else{ //when input is "d"
-                                move(Tile[row][col], Tile[row][col + 1]);
+                                move(_room[row][col], _room[row][col + 1]);
                         }
                 }
         }
@@ -173,25 +180,62 @@ public class Room{
                 //Check if destination is empty
                 else if(destination.getChar() == "_"){
                         //SWAP ENTITIES
-                        E temp = origin.getEntity();
+                        int oRow = origin.getRow();
+                        int oCol = origin.getCol();
+                        int dRow = destination.getRow();
+                        int dCol = destination.getCol();
+
+                        Creature temp = origin.getEntity();
+                        _room[oRow][oCol].setEntity(destination.getEntity());
+                        _room[dRow][dCol].setEntity(temp);
+                        /*
                         origin.setEntity(destination.getEntity());
                         destination.setEntity(temp);
+                        */
                         _playerTile = destination;
                 }
 
                 //Check if destination is a wall
                 else if(destination.getChar() == "█"){
+                        System.out.println("You cannot move there");
                         return;
                 }
 
                 //do stuff if destination has an entity
                 else{
+                        //ATTACK HERE <NOT DONE>
+                        attack(origin, destination);
                         return; //PROBABLY CHANGE
                 }
         }
+        public void attack(Tile attacker, Tile receiver){
+                int aRow = attacker.getRow();
+                int aCol = attacker.getCol();
+                int rRow = receiver.getRow();
+                int rCol = receiver.getCol();
+                _room[rRow][rCol].getEntity().takeDamage(attacker.getEntity().dealDamage());
+                if (!checkDeath(receiver)){
+                        _room[aRow][aCol].getEntity().takeDamage(attacker.getEntity().dealDamage());
+                        checkDeath(attacker);
+                }
+
+        }
+
+        public boolean checkDeath(Tile origin){
+                if(origin.getEntity().isDead()){
+                        _room[origin.getRow()][origin.getCol()].setEntity(null);
+                        return true;
+                }
+                return false;
+        }
         //asks the Monster to move
+
+        public boolean checkMonsterClear(){
+                return (_monsterQueue == null);
+        }
+
         public void askMonsterMove(){
-                move();
+                //NOT DONE
         }
 
 }
