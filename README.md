@@ -11,7 +11,7 @@ Ex) ASCII / unicode characters may not work depending on the OS
 
 # How to Play
 1. Javac BindingOfRug.java before doing anything else.
-2. Java BindingOfRug.java.
+2. Java BindingOfRug.
 3. Read and follow any directions and enjoy!
 
 # How it works / Complicated Data Structure "Map"
