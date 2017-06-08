@@ -4,12 +4,12 @@ import java.util.PriorityQueue;
 public class BindingOfRug{
         //instance variables
         private Player _player; // the current player
-        private Stack _floorStack; // a stack of monsters
+        private Stack<Floor> _floorStack; // a stack of monsters
 
         //constructor
         public BindingOfRug(){
                 _player = new Player(); // create a new Player
-                _floorStack = new Stack(); // create the stack of Floors
+                _floorStack = new Stack<Floor>(); // create the stack of Floors
         }
 
         //adds Floors to the stack of Floors
@@ -26,9 +26,9 @@ public class BindingOfRug{
                 //while there are still floors to complete...
                 while(!(_floorStack.empty())){
                         //check if there are still rooms within a Floor...
-                        Floor currentFloor = (Floor) (_floorStack.peek());
+                        Floor currentFloor = (_floorStack.peek());
                         while(!(currentFloor.checkDone())){
-                                Room currentRoom = (Room) (currentFloor.popRoom());
+                                Room currentRoom = (currentFloor.popRoom());
                                 //then check if the current room is Done...
                                 while(!currentRoom.checkDone()){
                                         //Process to play!!!
@@ -38,7 +38,7 @@ public class BindingOfRug{
                                         */
                                         currentRoom.print();
                                         currentRoom.askPlayerMove();
-                                        if(checkMonsterClear()){
+                                        if(currentRoom.checkMonsterClear()){
                                                 currentFloor.remove(currentRoom);
                                         }
                                 }
