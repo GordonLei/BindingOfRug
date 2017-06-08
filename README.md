@@ -24,13 +24,13 @@ Ex) ASCII / unicode characters may not work depending on the OS
 2. Java BindingOfRug.
 3. Read and follow any directions and enjoy!
 
-# How it works / Complicated Data Structure "Map"
+# Complicated Data Structure "Map"
 - _floorStack is a stack of Floors
 - Floors are priorityqueues with ___________ precedence (in other words the player enters the ________ room first).
 - Rooms are two-dimensional arrays with Tile objects that represent the spaces within the room.
 - Tile objects hold an entity (a monster, player, or null) and have a type (space or a wall).
 
-# ASCII / UNICODE character guideline / representation
+# ASCII / UNICODE character guideline & representation
 
 # Misc. 
 We also used codenvy (https://codenvy.com/) to write code on an online IDE collectively.
