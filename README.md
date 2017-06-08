@@ -17,7 +17,7 @@ Depending on what OS you are using, the terminal / command prompt / console may 
 Ex) Emptying the console only works in Linux / Macs
 
 Ex) ASCII / unicode characters may not work depending on the OS
-- For example, on IDE packages (ex. platformio-ide-terminal package of the Atom IDE does not support ASCII characters of  arrows)
+- ex) IDE packages that emulate terminals (ex. platformio-ide-terminal package of the Atom IDE does not support ASCII characters of arrows)
 
 # How to Play
 1. Javac BindingOfRug.java before doing anything else.
@@ -33,4 +33,4 @@ Ex) ASCII / unicode characters may not work depending on the OS
 # ASCII / UNICODE character guideline & representation
 
 # Misc. 
-We also used codenvy (https://codenvy.com/) to write code on an online IDE collectively.
+We also used codenvy (https://codenvy.com/) to collectively write code on an online IDE.
