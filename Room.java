@@ -1,7 +1,7 @@
 import java.util.Scanner;
 //import java.util.Stack;
 import lib.ArrayQueue;
-public class Room{
+public class Room implements Comparable{
         //Instance variables
         private Tile[][] _room;
         private Tile _playerTile;
@@ -86,6 +86,9 @@ public class Room{
                 return _isDone;
         }
 
+        public void setDone(Boolean value){
+                _isDone = value;
+        }
         //asks a player to move
         public void askPlayerMove(){
                 Scanner s = new Scanner(System.in);
@@ -208,6 +211,7 @@ public class Room{
                         return; //PROBABLY CHANGE
                 }
         }
+
         public void attack(Tile attacker, Tile receiver){
                 int aRow = attacker.getRow();
                 int aCol = attacker.getCol();
@@ -236,6 +240,15 @@ public class Room{
 
         public void askMonsterMove(){
                 //NOT DONE
+        }
+
+        public ArrayQueue getMonsters(){
+                return _monsterQueue;
+        }
+        //Comparable
+        public int compareTo(Room otherRoom){
+                if(_monsterQueue.size() < otherRoom.getMonsters().size())
+                        return -1;
         }
 
 }

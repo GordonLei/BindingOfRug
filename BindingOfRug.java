@@ -23,6 +23,7 @@ public class BindingOfRug{
 
         //play the game
         public void play(){
+                addFloor(4);
                 //while there are still floors to complete...
                 while(!(_floorStack.empty())){
                         //check if there are still rooms within a Floor...
@@ -31,26 +32,25 @@ public class BindingOfRug{
                                 Room currentRoom = (currentFloor.popRoom());
                                 //then check if the current room is Done...
                                 while(!currentRoom.checkDone()){
-                                        //Process to play!!!
-                                        /*
-                                        COOL
-                                        CODE HERE
-                                        */
                                         currentRoom.print();
                                         currentRoom.askPlayerMove();
                                         if(currentRoom.checkMonsterClear()){
+                                                currentRoom.setDone(true);
                                                 currentFloor.remove(currentRoom);
                                         }
                                 }
                                 //what do do when currentRoom is done...
-
-
+                                //should do nothing since it is accounted for in the if statement above
+                                if(currentFloor.empty()){
+                                        currentFloor.setDone(true);
+                                        _floorStack.remove(currentFloor);
+                                }
 
                         }
                         //what to do when currentFloor is done...
                 }
                 //what to do when WHOLE GAME IS BEAT
-
+                System.out.println("CONGRATS U BEAT BINDINGOFRUG 2017 SIMULATOR");
         }
 
         //Run this file to start the game

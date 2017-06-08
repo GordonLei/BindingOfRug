@@ -29,12 +29,16 @@ public class Floor extends PriorityQueue{
         }
 
         //set the Floor as Done
-        public void setDone(){
-                _isDone = true;
+        public void setDone(Boolean value){
+                _isDone = value;
         }
 
         //pop a Room from the queue
         public Room popRoom(){
                 return _roomQueue.poll();
+        }
+
+        public Boolean empty(){
+                return (poll() == null);
         }
 }
