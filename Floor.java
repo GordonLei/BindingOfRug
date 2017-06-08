@@ -1,6 +1,6 @@
 import java.util.PriorityQueue;
 
-public class Floor{
+public class Floor extends PriorityQueue{
         //instance variables
         private boolean _isDone; //checks if floor is Done
         private PriorityQueue<Room> _roomQueue; //the queue of rooms
