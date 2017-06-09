@@ -21,13 +21,13 @@ public class Player extends Creature{
                 if(input.equals("w")){
                         _dir = "↑";
                 }
-                if(input.equals("a")){
+                if(input.equals("s")){
                         _dir = "↓";
                 }
-                if(input.equals("s")){
+                if(input.equals("d")){
                         _dir = "→";
                 }
-                if(input.equals("d")){
+                if(input.equals("a")){
                         _dir = "←";
                 }
         }
