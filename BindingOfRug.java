@@ -3,6 +3,8 @@ import java.util.PriorityQueue;
 
 public class BindingOfRug{
         //instance variables
+        public static Floor _currentFloor;
+        public static Room _currentRoom;
         private Player _player; // the current player
         private Stack<Floor> _floorStack; // a stack of monsters
 
@@ -27,27 +29,27 @@ public class BindingOfRug{
                 //while there are still floors to complete...
                 while(!(_floorStack.empty())){
                         //check if there are still rooms within a Floor...
-                        Floor currentFloor = (_floorStack.peek());
-                        while(!(currentFloor.checkDone())){
-                                Room currentRoom = (currentFloor.popRoom());
-                                //then check if the current room is Done...
-                                while(!currentRoom.checkDone()){
-                                        currentRoom.print();
-                                        currentRoom.askPlayerMove();
-                                        if(currentRoom.checkMonsterClear()){
-                                                currentRoom.setDone(true);
-                                                currentFloor.remove(currentRoom);
+                        _currentFloor = (_floorStack.peek());
+                        while(!(_currentFloor.checkDone())){
+                                _currentRoom = (_currentFloor.popRoom());
+                                //then check if the _currentRoom is Done...
+                                while(!_currentRoom.checkDone()){
+                                        _currentRoom.print();
+                                        _currentRoom.askPlayerMove();
+                                        if(_currentRoom.checkMonsterClear()){
+                                                _currentRoom.setDone(true);
+                                                _currentFloor.remove(_currentRoom);
                                         }
                                 }
-                                //what do do when currentRoom is done...
+                                //what do do when _currentRoom is done...
                                 //should do nothing since it is accounted for in the if statement above
-                                if(currentFloor.empty()){
-                                        currentFloor.setDone(true);
-                                        _floorStack.remove(currentFloor);
+                                if(_currentFloor.empty()){
+                                        _currentFloor.setDone(true);
+                                        _floorStack.remove(_currentFloor);
                                 }
 
                         }
-                        //what to do when currentFloor is done...
+                        //what to do when _currentFloor is done...
                 }
                 //what to do when WHOLE GAME IS BEAT
                 System.out.println("CONGRATS U BEAT BINDINGOFRUG 2017 SIMULATOR");
