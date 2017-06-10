@@ -1,3 +1,4 @@
+package lib;
 public class Node<E>{
     
     private E _value;
