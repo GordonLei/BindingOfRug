@@ -105,70 +105,31 @@ public class Room implements Comparable{
 	/*
 	CHANGE TILES THING
 	*/
-	public void checkMove(String input){
-		String dir = _playerTile.getChar();
-		int row = _playerTile.getRow();
-		int col = _playerTile.getCol();
-		if(input.indexOf("c") == 0){
-			((Player)(_room[row][col].getEntity())).setDir(input.substring(1,2));
-		}
-		else if (dir.equals("↑")){
-			if (input.equals("w")){
-					move(_room[row][_col], _room[row - 1][col]);
-			}
-			else if (input.equals("a")){
-					move(_room[row][col], _room[row][col - 1]);
-			}
-			else if(input.equals("s")){
-					move(_room[row][col], _room[row + 1][col]);
-			}
-			else{ //when input is "d"
-					move(_room[row][col], _room[row][col + 1]);
-			}
-		}
-		else if (dir.equals("↓")){
-			if (input.equals("w")){
-					move(_room[row][col], _room[row + 1][col]);
-			}
-			else if (input.equals("a")){
-					move(_room[row][col], _room[row][col - 1]);
-			}
-			else if(input.equals("s")){
-					move(_room[row][col], _room[row - 1][col]);
-			}
-			else{ //when input is "d"
-					move(_room[row][col], _room[row][col + 1]);
-			}
-		}
-		else if(dir.equals("→")){
-			if (input.equals("w")){
-					move(_room[row][col], _room[row][col + 1]);
-			}
-			else if (input.equals("a")){
-					move(_room[row][col], _room[row - 1][col]);
-			}
-			else if(input.equals("s")){
-					move(_room[row][col], _room[row][col - 1]);
-			}
-			else{ //when input is "d"
-					move(_room[row][col], _room[row + 1][col]);
-			}
-		}
-		else { //when dir is ←
-			if (input.equals("w")){
-					move(_room[row][col], _room[row][col - 1]);
-			}
-			else if (input.equals("a")){
-					move(_room[row][col], _room[row + 1][col]);
-			}
-			else if(input.equals("s")){
-					move(_room[row][col], _room[row - 1][col]);
-			}
-			else{ //when input is "d"
-					move(_room[row][col], _room[row][col + 1]);
-			}
-		}
-	}
+    public void checkMove(String input){
+        String dir = _playerTile.getChar();
+        int row = _playerTile.getRow();
+        int col = _playerTile.getCol();
+        if(input.indexOf("a") == 0){
+            //((Player)(_room[row][col].getEntity())).checkAttack();
+            input = input.substring(1,2);
+            if (input.equals("w"))
+                attack(_room[row][_col], _room[row - 1][col]);
+            else if (input.equals("a"))
+                attack(_room[row][col], _room[row][col - 1]);
+            else if(input.equals("s"))
+                attack(_room[row][col], _room[row + 1][col]);
+            else //when input is "d"
+                attack(_room[row][col], _room[row][col + 1]);
+        }
+        else if (input.equals("w"))
+                    move(_room[row][_col], _room[row - 1][col]);
+        else if (input.equals("a"))
+            move(_room[row][col], _room[row][col - 1]);
+        else if(input.equals("s"))
+            move(_room[row][col], _room[row + 1][col]);
+        else //when input is "d"
+            move(_room[row][col], _room[row][col + 1]);
+    }
 
 	public void move(Tile origin, Tile destination){
 		//GOAL: swap the tiles + check walls + check if out of bounds
