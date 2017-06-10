@@ -7,10 +7,10 @@ public class Item{
     public Item(){
         _type = TYPES[(int)(Math.random()*2)];
         double rarityIndex=Math.random();
-        if(rarityIndex<0.60){ _rarity="Common"; _effects = new Effect[2];}
-        else if(rarityIndex<0.85){ _rarity="Rare"; _effects = new Effect[3];}
-        else if(rarityIndex<0.975){ _rarity="Epic"; _effects = new Effect[4];}
-        else {_rarity="Legendary"; _effects = new Effect[5];}
+        if(rarityIndex<0.60){ _rarity="Common"; _effects = new Effect[3];}
+        else if(rarityIndex<0.85){ _rarity="Rare"; _effects = new Effect[4];}
+        else if(rarityIndex<0.975){ _rarity="Epic"; _effects = new Effect[5];}
+        else {_rarity="Legendary"; _effects = new Effect[6];}
         generateEffects();
     }
 
@@ -24,31 +24,34 @@ public class Item{
                         _effects[i]=new Effect(_type);
                         effectPower+=_effects[i].getPower()*Integer.parseInt(_effects[i].getEffect()[1]);
                     }
-                }while(!(effectPower>1)||!(effectPower<3));
+                }while(!(effectPower>=1)||!(effectPower<=3));
                 break;
             case "Rare":
                 do{
+                    effectPower=0;
                     for(int i = 0; i<_effects.length; i++){
                         _effects[i]=new Effect(_type);
                         effectPower+=_effects[i].getPower()*Integer.parseInt(_effects[i].getEffect()[1]);
                     }
-                }while(!(effectPower>2)||!(effectPower<4));
+                }while(!(effectPower>=3)||!(effectPower<=5));
                 break;
             case "Epic":
                 do{
+                    effectPower=0;
                     for(int i = 0; i<_effects.length; i++){
                         _effects[i]=new Effect(_type);
                         effectPower+=_effects[i].getPower()*Integer.parseInt(_effects[i].getEffect()[1]);
                     }
-                }while(!(effectPower>3)||!(effectPower<5));
+                }while(!(effectPower>=5)||!(effectPower<=7));
                 break;
             case "Legendary":
                 do{
+                    effectPower=0;
                     for(int i = 0; i<_effects.length; i++){
                         _effects[i]=new Effect(_type);
                         effectPower+=_effects[i].getPower()*Integer.parseInt(_effects[i].getEffect()[1]);
                     }
-                }while(!(effectPower>4)||!(effectPower<6));
+                }while(!(effectPower>=7)||!(effectPower<=9));
                 break;
 
         }
