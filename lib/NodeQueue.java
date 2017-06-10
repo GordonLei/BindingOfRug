@@ -1,3 +1,4 @@
+package lib;
 public class NodeQueue<E> implements Queue<E>{
         private Node<E> _head,_tail;
         private int _size;

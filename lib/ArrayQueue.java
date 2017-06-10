@@ -1,3 +1,5 @@
+package lib;
+
 public class ArrayQueue<E> implements Queue<E>{
         private E[] _queue;
         private int _size, _front, _rear;
