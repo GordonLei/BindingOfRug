@@ -1,7 +1,7 @@
 import java.util.Scanner;
 //import java.util.Stack;
 import lib.*;
-public class Room implements Comparable{
+public abstract class Room implements Comparable{
         //Instance variables
         private Tile[][] _room;
         private Tile _playerTile;
@@ -140,9 +140,6 @@ public class Room implements Comparable{
                         }
         }
 
-        public void checkAttack(){
-
-        }
         public void move(Tile origin, Tile destination){
                 //GOAL: swap the tiles + check walls + check if out of bounds
 
@@ -214,13 +211,16 @@ public class Room implements Comparable{
                 //NOT DONE
         }
 
-        public ArrayQueue getMonsters(){
+        public ArrayQueue<Monster> getMonsters(){
                 return _monsterQueue;
         }
         //Comparable
         public int compareTo(Room otherRoom){
                 if(_monsterQueue.size() < otherRoom.getMonsters().size())
                         return -1;
+                else if(_monsterQueue.size() == otherRoom.getMonsters().size())
+                        return 0;
+                return 1;
         }
 
 }
