@@ -1,6 +1,6 @@
 import java.util.Scanner;
 //import java.util.Stack;
-import lib.ArrayQueue;
+import lib.*;
 public class Room implements Comparable{
         //Instance variables
         private Tile[][] _room;
@@ -9,7 +9,7 @@ public class Room implements Comparable{
         private int _col;
         private Player _player;
         private boolean _isDone; //to check if room is completed.
-        private ArrayQueue _monsterQueue; //a queue of multiple or one monster
+        private ArrayQueue<Monster> _monsterQueue; //a queue of multiple or one monster
 
         //constructor for a not same dimension room (length != width)
         public Room(int row, int column){
@@ -17,7 +17,7 @@ public class Room implements Comparable{
                 _player = new Player();
                 _playerTile = new Tile(_player, 0,0);
                 //create a new monster(s)
-                _monsterQueue = new ArrayQueue(1 + (int) (Math.random() * 3));
+                _monsterQueue = new ArrayQueue<Monster>(1 + (int) (Math.random() * 3));
                 for (int i = 0; i <  _monsterQueue.size(); i++){
                         Monster enemy = new Monster();
                         _monsterQueue.enqueue(enemy);
@@ -43,7 +43,7 @@ public class Room implements Comparable{
                 _player = new Player();
                 _playerTile = new Tile(_player, 0,0);
                 //create a new monster
-                _monsterQueue = new ArrayQueue(1 + (int) (Math.random() * 3));
+                _monsterQueue = new ArrayQueue<Monster>(1 + (int) (Math.random() * 3));
                 //creates the queue of monsters
                 for (int i = 0; i < _monsterQueue.size(); i++){
                         Monster enemy = new Monster();
@@ -110,11 +110,23 @@ public class Room implements Comparable{
                 String dir = _playerTile.getChar();
                 int row = _playerTile.getRow();
                 int col = _playerTile.getCol();
-                if(input.indexOf("c") == 0){
-                        ((Player)(_room[row][col].getEntity())).setDir(input.substring(1,2));
-                }
-                else if (dir.equals("↑")){
+                if(input.indexOf("a") == 0){
+                        //((Player)(_room[row][col].getEntity())).checkAttack();
+                        input = input.substring(1,2);
                         if (input.equals("w")){
+                                attack(_room[row][_col], _room[row - 1][col]);
+                                }
+                        else if (input.equals("a")){
+                                attack(_room[row][col], _room[row][col - 1]);
+                        }
+                        else if(input.equals("s")){
+                                attack(_room[row][col], _room[row + 1][col]);
+                        }
+                        else{ //when input is "d"
+                                attack(_room[row][col], _room[row][col + 1]);
+                        }
+                }
+                else if (input.equals("w")){
                                 move(_room[row][_col], _room[row - 1][col]);
                         }
                         else if (input.equals("a")){
@@ -126,51 +138,11 @@ public class Room implements Comparable{
                         else{ //when input is "d"
                                 move(_room[row][col], _room[row][col + 1]);
                         }
-                }
-                else if (dir.equals("↓")){
-                        if (input.equals("w")){
-                                move(_room[row][col], _room[row + 1][col]);
-                        }
-                        else if (input.equals("a")){
-                                move(_room[row][col], _room[row][col - 1]);
-                        }
-                        else if(input.equals("s")){
-                                move(_room[row][col], _room[row - 1][col]);
-                        }
-                        else{ //when input is "d"
-                                move(_room[row][col], _room[row][col + 1]);
-                        }
-                }
-                else if(dir.equals("→")){
-                        if (input.equals("w")){
-                                move(_room[row][col], _room[row][col + 1]);
-                        }
-                        else if (input.equals("a")){
-                                move(_room[row][col], _room[row - 1][col]);
-                        }
-                        else if(input.equals("s")){
-                                move(_room[row][col], _room[row][col - 1]);
-                        }
-                        else{ //when input is "d"
-                                move(_room[row][col], _room[row + 1][col]);
-                        }
-                }
-                else { //when dir is ←
-                        if (input.equals("w")){
-                                move(_room[row][col], _room[row][col - 1]);
-                        }
-                        else if (input.equals("a")){
-                                move(_room[row][col], _room[row + 1][col]);
-                        }
-                        else if(input.equals("s")){
-                                move(_room[row][col], _room[row - 1][col]);
-                        }
-                        else{ //when input is "d"
-                                move(_room[row][col], _room[row][col + 1]);
-                        }
-                }
         }
 
+        public void checkAttack(){
+
+        }
         public void move(Tile origin, Tile destination){
                 //GOAL: swap the tiles + check walls + check if out of bounds
 
@@ -246,7 +218,7 @@ public class Room implements Comparable{
                 return _monsterQueue;
         }
         //Comparable
-        public int compareTo(Object otherRoom){
+        public int compareTo(Room otherRoom){
                 if(_monsterQueue.size() < otherRoom.getMonsters().size())
                         return -1;
         }
