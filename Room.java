@@ -246,7 +246,7 @@ public class Room implements Comparable{
                 return _monsterQueue;
         }
         //Comparable
-        public int compareTo(Room otherRoom){
+        public int compareTo(Object otherRoom){
                 if(_monsterQueue.size() < otherRoom.getMonsters().size())
                         return -1;
         }
