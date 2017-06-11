@@ -5,6 +5,12 @@ To help him/her on his way, there are randomly spawned items that increase or de
 
 # To do list:
 - Progression of rooms --> floors --> end game...
+- Edit Player Stats by getting items
+- Items to apply effects
+- Bosses and mini-bosses
+- Different mobs
+- room walls
+- mob stats based on levels / floor
 - Monster movement
 - Items spawn
 - Make sure code can be played.
