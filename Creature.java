@@ -1,36 +1,39 @@
 public abstract class Creature{
-	//Each creature can only move a distance of 1 but can move multiple times
-	private int _health, _speed, _attack;
+        //Each creature can only move a distance of 1 but can move multiple times
+        private int _health, _speed, _attack;
+        private String _dir;
 
-	//constructor to make a custom Creature
-	public Creature(int health, int speed, int attack){
-		_health = health;
-		_speed = speed;
-		_attack =  attack;
-	}
-	
-	//constructor to make a basic Creature
-	public Creature(){
-		_health = 100;
-		_speed = 1;
-		_attack = 10;
-	}
+        //constructor to make a custom Creature
+        public Creature(int health, int speed, int attack, String dir){
+                _health = health;
+                _speed = speed;
+                _attack =  attack;
+                _dir = dir;
+        }
 
-	//lose _health by taking damage
-	public void takeDamage(int damage){
-		_health -= damage;
-	}
+        //constructor to make a basic Creature
+        public Creature(){
+                _health = 100;
+                _speed = 1;
+                _attack = 10;
+                _dir = null;
+        }
 
-	//checks if the creature is dead
-	public boolean isDead(){
-		return (_health <= 0);
-	}
+        //lose _health by taking damage
+        public void takeDamage(int damage){
+                _health -= damage;
+        }
 
-	//return how much damage the Creature does
-	public int dealDamage(){
-		return _attack;
-	}
+        //checks if the creature is dead
+        public boolean isDead(){
+                return (_health <= 0);
+        }
 
-	//return the ASCII character of the Creature
-	abstract String getChar();
+        //return how much damage the Creature does
+        public int dealDamage(){
+                return _attack;
+        }
+
+        //return the ASCII character of the Creature
+        abstract String getChar();
 }
