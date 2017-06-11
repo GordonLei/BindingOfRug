@@ -95,7 +95,7 @@ public class Room implements Comparable{
                 //If not loop again3
                 while ("wasd".indexOf(input) < 0){
                         if(input.equals("end")){
-                                throw new BindingOfRugException("Ignore this error.It is stop the game! Have a nice day!");
+                                //throw new BindingOfRugException("Ignore this error.It is stop the game! Have a nice day!");
                         }
                         System.out.println("Invalid direction. Input a direction as w,a,s,or d.");
                         input = s.next();
@@ -246,7 +246,7 @@ public class Room implements Comparable{
                         _room[pRow][pCol].setEntity(null);
                         System.out.println("RIP YOU DEADED");
                         System.out.println("GAME OVER");
-                        throw new BindingOfRugException("RIPERINO IN PEPPERONI GAEM OVAR");
+                        //throw new BindingOfRugException("RIPERINO IN PEPPERONI GAEM OVAR");
                 }
                 else if(origin.getEntity().isDead()){
                         Tile deadTemp = _room[origin.getRow()][origin.getCol()];
@@ -256,7 +256,7 @@ public class Room implements Comparable{
                         while(!(_monsterTileQueue.size() == 0)){
                                 System.out.println("size " + _monsterTileQueue.size());
                                 System.out.println("isEMpty: " + _monsterTileQueue.empty());
-                                System.out.println("queuelength: " + _monsterTileQueue.queuelength());
+                                //System.out.println("queuelength: " + _monsterTileQueue.queuelength());
                                 Tile temp = _monsterTileQueue.dequeue();
                                 if(temp != deadTemp)
                                         holder.enqueue(temp);
