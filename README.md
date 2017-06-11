@@ -4,10 +4,9 @@ The goal of the player is to defeat every monster in each room to progress throu
 To help him/her on his way, there are randomly spawned items that increase or decrease his/her stats. 
 
 # To do list:
-- Rooms have to be comparable
 - Progression of rooms --> floors --> end game...
 - Monster movement
-- Items?
+- Items spawn
 - Make sure code can be played.
 - Documentation + directions on how to run this.
 - Send code to Mr.Platek.
