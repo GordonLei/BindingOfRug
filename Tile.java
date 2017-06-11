@@ -64,14 +64,11 @@ public class Tile{
 
         //get ASCII / Unicode representation
         public String getChar(){
-                if(getEntity() != null){
-                        return _entity.getChar();
-                }
-                else if(_type.equals("wall"))
-                        return "█";
-                //if not a special type of wall this Tile is empty.
-                else{
+                if (_type.equals("_"))
                         return "_";
+                //if entity exists, return the entity's char instead
+                else{
+                        return _entity.getChar();
                 }
         }
 }
