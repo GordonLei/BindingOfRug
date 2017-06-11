@@ -15,10 +15,10 @@ public class Room implements Comparable{
 	public Room(int row, int column){
 		//creates new player
 		_player = new Player();
-		_playerTile = new Tile(_player, 0,0);
+		_playerTile = new Tile(_player, 1,1);
 		//create a new monster(s)
 		_monsterQueue = new ArrayQueue<Monster>();
-		for (int i = 0; i <  (1 + (int) (Math.random() * 3)); i++){
+		for (int i = 0; i <  (4 + (int) (Math.random() * 3)); i++){
 			Monster enemy = new Monster();
 			_monsterQueue.enqueue(enemy);
 		}
@@ -32,34 +32,16 @@ public class Room implements Comparable{
 		//creates the room
 		for(int r = 0; r < _room.length; r++){
 			for(int c = 0; c < _room[r].length; c++){
-				_room[r][c] = new Tile(r,c);
+				if(r==0||r==_room.length-1||c==0||c==_room[0].length-1)
+					_room[r][c] = new Tile("█",r,c);
+				else _room[r][c] = new Tile(r,c);
 			}
 		}
 	}
 
 	//constructor for a square room
 	public Room(int square){
-		//creates new player
-		_player = new Player();
-		_playerTile = new Tile(_player, 0,0);
-		//create a new monster
-		_monsterQueue = new ArrayQueue<Monster>(1 + (int) (Math.random() * 3));
-		//creates the queue of monsters
-		for (int i = 0; i < _monsterQueue.size(); i++){
-			Monster enemy = new Monster();
-			_monsterQueue.enqueue(enemy);
-		}
-		//some holder variables
-		_row = square;
-		_col = square;
-		_room = new Tile[square][square];
-		_isDone = false;
-		//put Tiles into the _room
-		for(int r = 0; r < _room.length; r++){
-			for(int c = 0; c < _room[r].length; c++){
-				_room[r][c] = new Tile(r,c);
-			}
-		}
+		Room(square, square);
 	}
 
 	//displays the room
@@ -142,7 +124,6 @@ public class Room implements Comparable{
 		return true;
 	}
 	public void checkMove(String input){
-		String dir = _playerTile.getChar();
 		int row = _playerTile.getRow();
 		int col = _playerTile.getCol();
 		if(input.indexOf("x") == 0){
