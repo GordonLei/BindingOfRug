@@ -6,7 +6,7 @@ To help him/her on his way, there are randomly spawned items that increase or de
 # To do list:
 - Edit Player Stats by getting items
 - Items to apply effects
-- Bosses and mini-bosses
+- Bosses
 - Different mobs
 - room walls
 - mob stats based on levels / floor
