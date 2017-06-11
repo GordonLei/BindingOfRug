@@ -1,6 +1,7 @@
 public class Player extends Creature{
 	//instance variables
 	private int _health, _speed, _attack;
+	private Tile _tile;
 
 
 	//Player starting stats
@@ -15,5 +16,5 @@ public class Player extends Creature{
 	public String getChar(){
 		return "⚇";
 	}
-	
+
 }

@@ -1,14 +1,13 @@
 public abstract class Creature{
 	//Each creature can only move a distance of 1 but can move multiple times
 	private int _health, _speed, _attack;
-	private String _dir;
+	private Tile _tile;
 
 	//constructor to make a custom Creature
-	public Creature(int health, int speed, int attack, String dir){
+	public Creature(int health, int speed, int attack){
 		_health = health;
 		_speed = speed;
 		_attack =  attack;
-		_dir = dir;
 	}
 
 	//constructor to make a basic Creature
@@ -16,7 +15,6 @@ public abstract class Creature{
 		_health = 100;
 		_speed = 1;
 		_attack = 10;
-		_dir = null;
 	}
 
 	//lose _health by taking damage
