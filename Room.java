@@ -15,7 +15,7 @@ public class Room implements Comparable{
 	public Room(int row, int column){
 		//creates new player
 		_player = new Player();
-
+		_playerTile = new Tile(_player, 1,1);
 		//create a new monster(s)
 		_monsterQueue = new ArrayQueue<Monster>();
 		for (int i = 0; i <  (4 + (int) (Math.random() * 3)); i++){
@@ -33,19 +33,15 @@ public class Room implements Comparable{
 		for(int r = 0; r < _room.length; r++){
 			for(int c = 0; c < _room[r].length; c++){
 				if(r==0||r==_room.length-1||c==0||c==_room[0].length-1)
-					_room[r][c] = new Tile("wall",r,c);
+					_room[r][c] = new Tile("█",r,c);
 				else _room[r][c] = new Tile(r,c);
 			}
 		}
-                _playerTile = new Tile(_player, 1,1);
-                _room[1][1] = _playerTile;
-                
-                //_playerTile.setEntity(_player);
 	}
 
 	//constructor for a square room
 	public Room(int square){
-		this(square, square);
+		Room(square, square);
 	}
 
 	//displays the room
@@ -83,12 +79,8 @@ public class Room implements Comparable{
 		//Check if a direction is inputed.
 		//If not loop again3
 		while ("wasd".indexOf(input) < 0){
-                        if(input.equals("end")){
-                                throw new EmptyQueueException("ignore this error.It is stop the game");
-                        }
 			System.out.println("Invalid direction. Input a direction as w,a,s,or d.");
-			input = s.next();
-
+			input = s.next();;
 		}
 		checkMove(input);
 	}
