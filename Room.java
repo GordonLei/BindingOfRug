@@ -12,6 +12,7 @@ public class Room implements Comparable{
 	private ArrayQueue<Monster> _monsterQueue; //a queue of multiple or one monster
 	private ArrayQueue<Tile> _monsterTileQueue;
 
+
 	//constructor for a not same dimension room (length != width)
 	public Room(int row, int column){
 		//creates new player
@@ -95,7 +96,7 @@ public class Room implements Comparable{
 		//If not loop again3
 		while ("wasd".indexOf(input) < 0){
 			if(input.equals("end")){
-				//throw new BindingOfRugException("Ignore this error.It is stop the game! Have a nice day!");
+				throw new BindingOfRugException("Ignore this error.It is stop the game! Have a nice day!");
 			}
 			System.out.println("Invalid direction. Input a direction as w,a,s,or d.");
 			input = s.next();
@@ -198,7 +199,7 @@ public void move(Tile origin, Tile destination){
 		int dRow = destination.getRow();
 		int dCol = destination.getCol();
 
-		Creature temp = origin.getEntity();
+		Player temp = (Player) origin.getEntity();
 		_room[oRow][oCol].setEntity(destination.getEntity());
 		_room[dRow][dCol].setEntity(temp);
 		/*
@@ -227,10 +228,14 @@ public void attack(Tile attacker, Tile receiver){
 	int aCol = attacker.getCol();
 	int rRow = receiver.getRow();
 	int rCol = receiver.getCol();
-	System.out.println("attacker damage :" +attacker.getEntity().dealDamage());
+	System.out.println("attacker damage :" + (attacker.getEntity().dealDamage()));
 	_room[rRow][rCol].getEntity().takeDamage(attacker.getEntity().dealDamage());
+	System.out.println("Player dealt " + _room[aRow][aCol].getEntity().getAttack());
+	System.out.println("Enemy has " + _room[rRow][rCol].getEntity().getHealth() + " health");
 	if (!_room[rRow][rCol].getEntity().isDead()){
-		_room[aRow][aCol].getEntity().takeDamage(attacker.getEntity().dealDamage());
+		_room[aRow][aCol].getEntity().takeDamage(receiver.getEntity().dealDamage());
+		System.out.println("Enemy dealt " + _room[rRow][rCol].getEntity().getAttack());
+		System.out.println("Player has " + _room[aRow][aCol].getEntity().getHealth() + " health");
 		checkDeath(attacker);
 	}
 	else{
@@ -240,13 +245,15 @@ public void attack(Tile attacker, Tile receiver){
 }
 
 public boolean checkDeath(Tile origin){
-	if ((origin.getEntity() == getPlayer()) && (getPlayer().isDead())){
+	System.out.println(_playerTile.getRow());
+	System.out.println(_playerTile.getCol());
+	if ((_playerTile == origin) && (getPlayer().isDead())){
 		int pRow = _playerTile.getRow();
 		int pCol = _playerTile.getCol();
 		_room[pRow][pCol].setEntity(null);
 		System.out.println("RIP YOU DEADED");
 		System.out.println("GAME OVER");
-		//throw new BindingOfRugException("RIPERINO IN PEPPERONI GAEM OVAR");
+		throw new BindingOfRugException("RIPERINO IN PEPPERONI GAEM OVAR");
 	}
 	else if(origin.getEntity().isDead()){
 		Tile deadTemp = _room[origin.getRow()][origin.getCol()];
