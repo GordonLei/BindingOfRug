@@ -1,13 +1,11 @@
 public class Item{
-    public static String[] TYPES = {"Sword", "Armor", "Potion"};
+    public static String[] TYPES = {"Sword", "Armor"};
     public static String[] RARITY = {"Common", "Rare", "Epic", "Legendary"};
     private String _type, _rarity;
     private Effect[] _effects;
-	private int _level;
 
     public Item(){
-        _type = TYPES[(int)(Math.random()*3)];
-		_level = BindingOfRug._currentFloor;
+        _type = TYPES[(int)(Math.random()*2)];
         double rarityIndex=Math.random();
         if(rarityIndex<0.60){ _rarity="Common"; _effects = new Effect[3];}
         else if(rarityIndex<0.85){ _rarity="Rare"; _effects = new Effect[4];}
@@ -26,7 +24,7 @@ public class Item{
                         _effects[i]=new Effect(_type);
                         effectPower+=_effects[i].getPower()*Integer.parseInt(_effects[i].getEffect()[1]);
                     }
-                }while(!(effectPower>=1)||!(effectPower<=2));
+                }while(!(effectPower>=1)||!(effectPower<=3));
                 break;
             case "Rare":
                 do{
@@ -35,7 +33,7 @@ public class Item{
                         _effects[i]=new Effect(_type);
                         effectPower+=_effects[i].getPower()*Integer.parseInt(_effects[i].getEffect()[1]);
                     }
-                }while(!(effectPower>=3)||!(effectPower<=4));
+                }while(!(effectPower>=3)||!(effectPower<=5));
                 break;
             case "Epic":
                 do{
@@ -44,7 +42,7 @@ public class Item{
                         _effects[i]=new Effect(_type);
                         effectPower+=_effects[i].getPower()*Integer.parseInt(_effects[i].getEffect()[1]);
                     }
-                }while(!(effectPower>=5)||!(effectPower<=6));
+                }while(!(effectPower>=5)||!(effectPower<=7));
                 break;
             case "Legendary":
                 do{
@@ -53,34 +51,16 @@ public class Item{
                         _effects[i]=new Effect(_type);
                         effectPower+=_effects[i].getPower()*Integer.parseInt(_effects[i].getEffect()[1]);
                     }
-                }while(!(effectPower>=7)||!(effectPower<=8));
+                }while(!(effectPower>=7)||!(effectPower<=9));
                 break;
 
         }
 
     }
 
-	public int getLevel(){
-		return _level;
-	}
-
     public String toString(){
         String ans = _rarity +" "+ _type;
-        for(int i = 0; i < _effects.length; i++){
-			for(int j = i+1; j < _effects.length; j++){
-				if(_effects[i].getType().equals(_effects[j].getType())){
-					_effects[i].addPower(_effects[j].getPower());
-					_effects[j].addPower(-_effects[j].getPower());
-				}
-
-			}
-
-		}
-		for(Effect effect:_effects)
-			if(effect.getPower()!=0){
-				if(effect.getPower()>0) {ans+="\n\t"+effect.getType()+"+"+effect.getPower();}
-				else {ans+="\n\t"+effect.getType()+effect.getPower();}
-			}
+        for(Effect effect:_effects) ans+="\n\t"+effect;
         return ans;
     }
 

@@ -17,6 +17,10 @@ public class Player extends Creature{
 		//return "⚇";
 	}
 
+	public int getSpeed(){
+		return _speed;
+	}
+
 	public int getHealth(){
 		return _health;
 	}

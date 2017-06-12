@@ -335,6 +335,55 @@ public void move(Tile origin, Tile destination){
 		return; //PROBABLY CHANGE
 	}
 }
+public void monsterRandomMove(){
+	ArrayQueue<Tile> holder = new ArrayQueue<Tile>(_monsterTileQueue.size());
+	int i = 0;
+	String dir = "";
+	int randomPercentage = (int) (Math.random() * 4);
+	//while(!(_monsterTileQueue.size() == 0)){
+		Tile temp = _monsterTileQueue.dequeue();
+		int tempXcor = temp.getRow();
+		int tempYcor = temp.getCol();
+		holder.enqueue(temp);
+		i++;
+		if (randomPercentage == 0){
+			dir = "w";
+		}
+		if (randomPercentage == 1){
+			dir = "a";
+		}
+		if (randomPercentage == 2){
+			dir = "s";
+		}
+		if (randomPercentage == 3){
+			dir = "d";
+		}
+		//_room[wallXcor][wallYcor] = new Tile("wall", wallXcor, wallYcor);
+		while(!(_monsterTileQueue.size() == 0)){{
+			if(dir.equals("w")){
+				if(tempXcor + 1 < _row  && (_room[tempXcor + 1][tempYcor].getType()) != "wall"){
+					monstermove(temp,_room[tempXcor + 1][tempYcor]);
+				}
+			}
+			else if(dir.equals("a")){
+				if(tempYcor  - 1 > 0 && (_room[tempYcor][tempYcor - 1].getType()) != "wall"){
+					_room[tempYcor - 1][tempYcor].setType("wall");
+				}
+			}
+			else if(dir.equals("s")){
+				if(tempXcor - 1 > 0 && (_room[tempXcor - 1][tempXcor].getType()) != "wall"){
+					_room[tempXcor - 1][tempXcor].setType("wall");
+				}
+			}
+			else if(dir.equals("d")){
+				if(tempYcor + 1 < _col  && (_room[tempYcor][tempYcor + 1].getType()) != "wall"){
+					_room[tempYcor + 1][tempYcor].setType("wall");
+				}
+			}
+		}
+	_monsterTileQueue = holder;
+	}
+}
 public int monstermove(Tile origin, Tile destination){
                 //GOAL: swap the tiles + check walls + check if out of bounds
 

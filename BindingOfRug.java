@@ -44,8 +44,12 @@ public class BindingOfRug{
 					System.out.print("\033[H\033[2J");
 					System.out.flush();
 					*/
-					_currentRoom.print();
-					_currentRoom.askPlayerMove();
+					int speedcounter = _currentRoom.getPlayer().getSpeed();
+					while (speedcounter > 0){
+						_currentRoom.print();
+						_currentRoom.askPlayerMove();
+						speedcounter--;
+					}
 					_currentRoom.monsterRR();
 					if(_currentRoom.checkMonsterClear()){
 						_currentRoom.setDone(true);
