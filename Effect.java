@@ -1,30 +1,22 @@
 public class Effect{
 	public static final String[][] EFFECT_LIST=
 	{
-		//general effects
-		{"VIS", "2"},
 		{"SPD", "2"},
 		{"DEX", "1"},
-		{"HP", "1"},
-		{"LUK", "1"},
+		{"HP", "1"}
 		//{},
-
-		//sword effects
+	};
+	public static final String[][] SWORD_EFFECT_LIST=
+	{
 		{"ATK", "1"},
-		{"ACC", "1"},
-		{"DOT", "1"},
+		{"ACC", "1"}
 		//{},
-		//{},
-		//{},
-
-		//armor effects
+	};
+	public static final String[][] ARMOR_EFFECT_LIST=
+	{
 		{"DEF", "1"},
-		{"THRN", "1"},
+		{"THRN", "1"}
 		//{},
-		//{},
-		//{},
-		//{},
-
 	};
 	private String _itemType;
 	private String[] _effect;
@@ -35,8 +27,16 @@ public class Effect{
 		init();
 	}
 
+	public String getType(){
+		return getEffect()[0];
+	}
+
 	public int getPower(){
 		return _power;
+	}
+
+	public void addPower(int num){
+		_power+=num;
 	}
 
 	public String[] getEffect(){
@@ -47,20 +47,27 @@ public class Effect{
 		double index = Math.random();
 		switch(_itemType){
 			case "Sword":
-				if(index<0.5) _effect=EFFECT_LIST[(int)(Math.random()*5)];
-				else _effect=EFFECT_LIST[5+(int)(Math.random()*3)];
+				if(index<0.5) _effect=EFFECT_LIST[(int)(Math.random()*EFFECT_LIST.length)];
+				else _effect=SWORD_EFFECT_LIST[(int)(Math.random()*SWORD_EFFECT_LIST.length)];
 				break;
 			case "Armor":
-				if(index<0.5) _effect=EFFECT_LIST[(int)(Math.random()*5)];
-				else _effect=EFFECT_LIST[8+(int)(Math.random()*2)];
+				if(index<0.5) _effect=EFFECT_LIST[(int)(Math.random()*EFFECT_LIST.length)];
+				else _effect=ARMOR_EFFECT_LIST[(int)(Math.random()*ARMOR_EFFECT_LIST.length)];
+				break;
+			case "Potion":
+				_effect=EFFECT_LIST[2];
 				break;
 		}
 		_power=(int)(Math.random()*5)-2;
 	}
 
+	// public String toString(){
+	// 	if (_power<0) return _effect[0]+_power;
+	// 	return _effect[0]+"+"+_power;
+	// }
+
 	public String toString(){
-		if (_power<0) return _effect[0]+_power;
-		return _effect[0]+"+"+_power;
+		return "{"+_effect[0]+","+getPower()+"}";
 	}
 
 	public static void main(String[] args){
