@@ -8,7 +8,7 @@ public class Monster extends Creature{
                 _health = 20*BindingOfRug._floorNumber;
                 _speed = 1;
                 _attack = 10*BindingOfRug._floorNumber;
-                _char = "M";
+                _char = "☿";
         }
 
         //constructor for custom monster
