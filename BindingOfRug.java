@@ -19,8 +19,8 @@ public class BindingOfRug{
 	//adds Floors to the stack of Floors
 	public void addFloor(int num){
 		for (int i = 0; i < num; i++){
-			//create a floor with at least one room, at max four rooms
-			Floor floor = new Floor(1 + ((int) (Math.random() * 4)));
+			//create a floor with at least four rooms, at max six rooms
+			Floor floor = new Floor(4 + ((int) (Math.random() * 3)));
 			_floorStack.add(floor);
 		}
 	}
