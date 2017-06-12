@@ -439,6 +439,7 @@ public void attack(Tile attacker, Tile receiver){
 			}
 		}
 		else System.out.println("You dodged monster's attack");
+		checkDeath(attacker);
 	}
 	if (attacker != _playerTile && !(_room[rRow][rCol].getEntity().isDead())){
 		_room[aRow][aCol].getEntity().takeDamage(receiver.getEntity().dealDamage());
