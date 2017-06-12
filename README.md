@@ -1,10 +1,10 @@
 # What is BindingOfRug?
-Basically, BindingOfRug is the game Rouge played in your terminal / console.
+Basically, BindingOfRug is the game Rogue played in your terminal / console.
 The goal of the player is to defeat every monster in each room to progress through the floors and eventually "escape" the dungeon. 
 
 To help him/her on his way, there are randomly spawned items (in chests) that increase or decrease his/her stats. 
 
-The player can deicide to keep the item or not take take the item as he / she sees fit.
+The player can decide to keep the item or not take take the item as he / she sees fit.
 
 
 # Bugs / Possible Errors
@@ -14,7 +14,7 @@ Ex) Emptying the console only works in Linux / Macs
 NOTE: Works kinda weird due to ordering (if you walk to a wall it does not print the room).
 
 Ex) ASCII / unicode characters may not work depending on the OS. 
-NOTE: This is now deprecaetd since we are using letters and symbols found on the keyboard. 
+NOTE: This is now deprecated since we are using letters and symbols found on the keyboard. 
 
 However you can still change the code to reflect the better looking characters (most of these characters can be found commented in methods).
 
@@ -45,15 +45,25 @@ Monster Movement needs to be polished some more
 - General Movement:
   - the move methods swap the entities of adjacent Tile(s) and also checks if the types of the Tile(s) are walls / chests.
     - If so, then entities can move onto walls and chests disappear if the Player steps on it.
-- Monster Movement:
+- Monster Movement: 
   Version of the A* algorithm - checks all tiles around it and "moves" to the one with the closest manhattandistance. 
    - It does this by adding itself to a closedlist such that the next tile cannot be one it already visited - should not get stuck.
+   
+# Random Item Generation
+- When a player opens a chest, a random Item is generated.
+- Items have 4 different rarities: common, rare, epic, and legendary.
+  -The number of effects and power of effects increases with rarity
+- Items have a random _effects array of Effects, which are randomly generated from a preset list of effects
+  - Effects can be positive or negative
+- Item power ramps up with level, which is determined by the floor it is found in.
+- You start with a no-effect sword and no-effect armor
+
 # ASCII / UNICODE character guideline & representation
 - \"#" = wall
 - " " = empty space
-- "c" = chest
-- "m" = monster
-- "p" = player(you!)
+- "C" = chest
+- "M" = monster
+- "P" = player(you!)
 
 # Misc. 
-We also used codenvy (https://codenvy.com/) to collectively write code on an online IDE.
+We also used codenvy (https://codenvy.com/) to collectively write code on an online IDE and GitHub for version control.
