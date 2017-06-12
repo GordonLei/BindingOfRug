@@ -32,11 +32,14 @@ public class Room implements Comparable{
 				else _room[r][c] = new Tile(r,c);
 			}
 		}
+
+		generateWalls(row, column);
 		_playerTile = new Tile(_player, 1,1);
 		_room[1][1] = _playerTile;
+
 		//create a new monster(s)
 
-		int randMonNum = 1 + ((int) (Math.random() * (row-2) * (column-2) * .25));
+		int randMonNum = 1 + ((int) (Math.random() * (row-4) * (column-4) * .1));
 		_monsterQueue = new ArrayQueue<Monster>(randMonNum);
 		_monsterTileQueue = new ArrayQueue<Tile>(randMonNum);
 		for (int i = 0; i <  randMonNum; i++){
@@ -60,6 +63,84 @@ public class Room implements Comparable{
 		this(square, square);
 	}
 
+	public void generateWalls(int row, int column){
+		int wallPercentage = (int) ((row - 2)* (column - 2) * .10);
+		//System.out.println(wallPercentage);
+		int wallXcor = 2 + (int)(Math.random() * (row-3));
+		int wallYcor = 2 + (int) (Math.random() * (column - 3));
+		String dir = "";
+		int randomPercentage = (int) (Math.random() * 4);
+		//Tile temp = _room[wallXcor][wallYcor];
+		if (randomPercentage == 0){
+			dir = "w";
+		}
+		if (randomPercentage == 1){
+			dir = "a";
+		}
+		if (randomPercentage == 2){
+			dir = "s";
+		}
+		if (randomPercentage == 3){
+			dir = "d";
+		}
+		//_room[wallXcor][wallYcor] = new Tile("wall", wallXcor, wallYcor);
+		while(!(wallPercentage == 0)){
+			if(dir.equals("w")){
+				if(wallXcor + 1 < _row  && (_room[wallXcor + 1][wallYcor].getType()) != "wall"){
+					_room[wallXcor + 1][wallYcor].setType("wall");
+					wallXcor++;
+					wallPercentage--;
+					System.out.println(wallPercentage);
+
+				}
+				else {
+					System.out.println(wallPercentage);
+					wallXcor = 2 + (int)(Math.random() * (row-3));
+					wallYcor = 2 + (int) (Math.random() * (column - 3));
+				}
+			}
+			 else if(dir.equals("a")){
+				if(wallYcor  - 1 > 0 && (_room[wallXcor][wallYcor - 1].getType()) != "wall"){
+					_room[wallXcor - 1][wallYcor].setType("wall");
+					wallYcor--;
+					wallPercentage--;
+					System.out.println(wallPercentage);
+				}
+				else {
+					System.out.println(wallPercentage);
+					wallXcor = 2 + (int)(Math.random() * (row-3));
+					wallYcor = 2 + (int) (Math.random() * (column - 3));
+				}
+			}
+			else if(dir.equals("s")){
+				if(wallXcor - 1 > 0 && (_room[wallXcor - 1][wallYcor].getType()) != "wall"){
+					_room[wallXcor - 1][wallYcor].setType("wall");
+					wallXcor--;
+					wallPercentage--;
+					System.out.println(wallPercentage);
+				}
+				else {
+					System.out.println(wallPercentage);
+					wallXcor = 2 + (int)(Math.random() * (row-3));
+					wallYcor = 2 + (int) (Math.random() * (column - 3));
+				}
+			}
+			else if(dir.equals("d")){
+				if(wallYcor + 1 < _col  && (_room[wallXcor][wallYcor + 1].getType()) != "wall"){
+					_room[wallXcor + 1][wallYcor].setType("wall");
+					wallYcor ++;
+					wallPercentage--;
+					System.out.println(wallPercentage);
+				}
+				else {
+					System.out.println(wallPercentage);
+					wallXcor = 2 + (int)(Math.random() * (row-3));
+					wallYcor = 2 + (int) (Math.random() * (column - 3));
+				}
+			}
+		}
+
+	}
 	//displays the room
 	public void print(){
 		for(Tile[] row : _room){
