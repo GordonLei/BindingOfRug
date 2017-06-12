@@ -4,14 +4,10 @@ The goal of the player is to defeat every monster in each room to progress throu
 To help him/her on his way, there are randomly spawned items that increase or decrease his/her stats. 
 
 # To do list:
-- Edit Player Stats by getting items
-- Items to apply effects
-- Bosses
-- Different mobs
-- mob stats based on levels / floor
+- Edit Player Stats by getting items (items apply effects)
 - Monster movement
 - Items spawn
-- Make sure code can be played. <technically yes right now>
+- Make sure code can be played.
 - Documentation + directions on how to run this.
 - Send code to Mr.Platek.
 
