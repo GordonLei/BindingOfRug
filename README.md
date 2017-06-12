@@ -42,11 +42,11 @@ Monster Movement needs to be polished some more
   Version of the A* algorithm - checks all tiles around it and "moves" to the one with the closest manhattandistance. 
    - It does this by adding itself to a closedlist such that the next tile cannot be one it already visited - should not get stuck.
 # ASCII / UNICODE character guideline & representation
-\"#" = wall
-" " = empty space
-"c" = chest
-"m" = monster
-"p" = player(you!)
+- \"#" = wall
+- " " = empty space
+- "c" = chest
+- "m" = monster
+- "p" = player(you!)
 
 # Misc. 
 We also used codenvy (https://codenvy.com/) to collectively write code on an online IDE.
