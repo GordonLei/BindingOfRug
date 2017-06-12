@@ -35,8 +35,16 @@ public class Effect{
 		init();
 	}
 
+	public String getType(){
+		return getEffect()[0];
+	}
+
 	public int getPower(){
 		return _power;
+	}
+
+	public void addPower(int num){
+		_power+=num;
 	}
 
 	public String[] getEffect(){
@@ -54,13 +62,20 @@ public class Effect{
 				if(index<0.5) _effect=EFFECT_LIST[(int)(Math.random()*5)];
 				else _effect=EFFECT_LIST[8+(int)(Math.random()*2)];
 				break;
+			case "Potion":
+				_effect=EFFECT_LIST[3];
+				break;
 		}
 		_power=(int)(Math.random()*5)-2;
 	}
 
+	// public String toString(){
+	// 	if (_power<0) return _effect[0]+_power;
+	// 	return _effect[0]+"+"+_power;
+	// }
+
 	public String toString(){
-		if (_power<0) return _effect[0]+_power;
-		return _effect[0]+"+"+_power;
+		return "{"+_effect[0]+","+getPower()+"}";
 	}
 
 	public static void main(String[] args){
