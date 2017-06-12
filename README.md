@@ -27,7 +27,7 @@ Ex) There might be extra methods that we used in past but removed in the current
 - Monsters and Players inherit methods from Creature.
 
 # ASCII / UNICODE character guideline & representation
-- # = walls
+- hashtags are walls
 - P = Player (you)
 - M = Monsters
 - C = chests
