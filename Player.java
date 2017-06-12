@@ -36,7 +36,7 @@ public class Player extends Creature{
 
 	//get representation of the Player
 	public String getChar(){
-		return "P";
+		return "⚇";
 		//return "⚇";
 	}
 
