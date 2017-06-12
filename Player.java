@@ -7,7 +7,7 @@ public class Player extends Creature{
 	public Player(){
 		_health = 100;
 		_speed = 1;
-		_attack = 25;
+		_attack = 999;
 		_inventory = null;
 	}
 

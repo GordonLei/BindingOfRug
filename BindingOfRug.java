@@ -3,6 +3,7 @@ import java.util.PriorityQueue;
 
 public class BindingOfRug{
 	//instance variables
+	public static int _floorNumber;
 	public static Floor _currentFloor;
 	public static Room _currentRoom;
 	private Player _player; // the current player
@@ -12,6 +13,7 @@ public class BindingOfRug{
 	public BindingOfRug(){
 		_player = new Player(); // create a new Player
 		_floorStack = new Stack<Floor>(); // create the stack of Floors
+		_floorNumber = 1;
 	}
 
 	//adds Floors to the stack of Floors
@@ -44,6 +46,7 @@ public class BindingOfRug{
 					*/
 					_currentRoom.print();
 					_currentRoom.askPlayerMove();
+					_currentRoom.monsterRR();
 					if(_currentRoom.checkMonsterClear()){
 						_currentRoom.setDone(true);
 					}
@@ -56,6 +59,7 @@ public class BindingOfRug{
 				//should do nothing since it is accounted for in the if statement above
 				if (_currentFloor.getRooms().size() == 0){
 					_currentFloor.setDone(true);
+					_floorNumber++;
 				}
 			}
 			//what to do when _currentFloor is done...

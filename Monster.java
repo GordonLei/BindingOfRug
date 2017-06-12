@@ -11,6 +11,12 @@ public class Monster extends Creature{
                 _char = "M";
         }
 
+        public Monster(int floorNumber){
+                _health = (int) (100 * (1 + (.20 * (floorNumber - 1))));
+                _speed =  (int) (1);
+                _attack = (int) (10 * (1 + (.5 * (floorNumber - 1))));
+                _char = "M";
+        }
         //constructor for custom monster
         public Monster(String character, int health, int speed, int attack){
                 _health = health;

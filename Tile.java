@@ -1,8 +1,9 @@
+//import java.util.LinkedList<E>;
 public class Tile{
 	//instance varaibles
 	private Creature _entity;
 	private String _type;
-	private int _row, _col;
+	private int _row, _col, _manhattanDist;
 
 	//constructor for default Tile
 	public Tile(int row, int col){
@@ -31,7 +32,19 @@ public class Tile{
 		_row = row;
 		_col = col;
 	}
-
+	public void manhattanDist(Tile destination){
+                if(_type.equals("wall")) _manhattanDist = 1000;
+                else{
+                	int dy = Math.abs(destination.getRow() - _row);
+                	int dx = Math.abs(destination.getCol() - _col);
+                	int mandist = dx+dy;
+                _manhattanDist = mandist;
+              }
+        }
+          public int getmanhattanDist(Tile destination){
+            manhattanDist(destination);
+            return _manhattanDist;
+          }
 	//Delete entity on Tile
 	public void deleteEntity(){
 		_entity = null;

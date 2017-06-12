@@ -1,5 +1,6 @@
 import java.util.Scanner;
 //import java.util.Stack;
+import java.util.LinkedList;
 import lib.*;
 public class Room implements Comparable{
 	//Instance variables
@@ -39,16 +40,16 @@ public class Room implements Comparable{
 
 		//create a new monster(s)
 
-		int randMonNum = 1 + ((int) (Math.random() * (row-4) * (column-4) * .1));
+		int randMonNum = 1 + ((int) (Math.random() * 4));
 		_monsterQueue = new ArrayQueue<Monster>(randMonNum);
 		_monsterTileQueue = new ArrayQueue<Tile>(randMonNum);
 		for (int i = 0; i <  randMonNum; i++){
 			//int ranHealth = (int) (Math.random() * 10) * 10;
 			//int ranAttack = (int) (Math.random() * 10) * 2;
-			Monster enemy = new Monster();
-			Tile enemyTile = _room[1 + (int)(Math.random() * (row-2))][1 + (int) (Math.random() * (column - 2))];
-			while((enemyTile != _playerTile)&& !(enemyTile.getType().equals("empty")) && !(enemyTile.getEntity() == null)){
-				enemyTile = _room[1 + (int) ((Math.random()) * (row-2))][1 + (int) (Math.random() * (column - 2))];
+			Monster enemy = new Monster(BindingOfRug._floorNumber);
+			Tile enemyTile = _room[2 + (int)(Math.random() * (row-3))][2 + (int) (Math.random() * (column - 3))];
+			while((enemyTile != _playerTile) && !(enemyTile.getType().equals("empty")) && !(enemyTile.getEntity() == null)){
+				enemyTile = _room[2 + (int) ((Math.random()) * (row-3))][2 + (int) (Math.random() * (column - 3))];
 			}
 			enemyTile.setType("empty");
 			enemyTile.setEntity(enemy);
@@ -92,24 +93,24 @@ public class Room implements Comparable{
 					_room[wallXcor + 1][wallYcor].setType("wall");
 					wallXcor++;
 					wallPercentage--;
-					System.out.println(wallPercentage);
+					//System.out.println(wallPercentage);
 
 				}
 				else {
-					System.out.println(wallPercentage);
+					//System.out.println(wallPercentage);
 					wallXcor = 2 + (int)(Math.random() * (row-3));
 					wallYcor = 2 + (int) (Math.random() * (column - 3));
 				}
 			}
-			 else if(dir.equals("a")){
+			else if(dir.equals("a")){
 				if(wallYcor  - 1 > 0 && (_room[wallXcor][wallYcor - 1].getType()) != "wall"){
 					_room[wallXcor - 1][wallYcor].setType("wall");
 					wallYcor--;
 					wallPercentage--;
-					System.out.println(wallPercentage);
+					//System.out.println(wallPercentage);
 				}
 				else {
-					System.out.println(wallPercentage);
+					//System.out.println(wallPercentage);
 					wallXcor = 2 + (int)(Math.random() * (row-3));
 					wallYcor = 2 + (int) (Math.random() * (column - 3));
 				}
@@ -119,10 +120,10 @@ public class Room implements Comparable{
 					_room[wallXcor - 1][wallYcor].setType("wall");
 					wallXcor--;
 					wallPercentage--;
-					System.out.println(wallPercentage);
+					//System.out.println(wallPercentage);
 				}
 				else {
-					System.out.println(wallPercentage);
+					//System.out.println(wallPercentage);
 					wallXcor = 2 + (int)(Math.random() * (row-3));
 					wallYcor = 2 + (int) (Math.random() * (column - 3));
 				}
@@ -132,10 +133,10 @@ public class Room implements Comparable{
 					_room[wallXcor + 1][wallYcor].setType("wall");
 					wallYcor ++;
 					wallPercentage--;
-					System.out.println(wallPercentage);
+					//System.out.println(wallPercentage);
 				}
 				else {
-					System.out.println(wallPercentage);
+					//System.out.println(wallPercentage);
 					wallXcor = 2 + (int)(Math.random() * (row-3));
 					wallYcor = 2 + (int) (Math.random() * (column - 3));
 				}
@@ -334,7 +335,44 @@ public void move(Tile origin, Tile destination){
 		return; //PROBABLY CHANGE
 	}
 }
+public int monstermove(Tile origin, Tile destination){
+                //GOAL: swap the tiles + check walls + check if out of bounds
 
+                //Check if out of bound
+                if (destination.getRow() < 0 || destination.getRow() > _row ||
+                destination.getCol() < 0 || destination.getCol() > _col){
+                        return -1;
+                }
+
+                //Check if destination is empty
+                if(destination.getChar().equals(" ")){
+                        //SWAP ENTITIES
+                        int oRow = origin.getRow();
+                        int oCol = origin.getCol();
+                        int dRow = destination.getRow();
+                        int dCol = destination.getCol();
+
+                        Monster temp = (Monster) origin.getEntity();
+                        _room[oRow][oCol].setEntity(destination.getEntity());
+                        _room[dRow][dCol].setEntity(temp);
+                        /*
+                        origin.setEntity(destination.getEntity());
+                        destination.setEntity(temp);
+                        */
+                        return 1;
+                }
+                //Check if destination is a wall
+                else if(destination.getType().equals("wall")){
+                        return -1;
+                }
+
+								else if(destination == _playerTile){
+												attack(origin, destination);
+                        return -1;
+                }
+
+								return 1;
+        }
 public void attack(Tile attacker, Tile receiver){
 	System.out.print("\033[H\033[2J");
 	System.out.flush();
@@ -371,8 +409,8 @@ public void attack(Tile attacker, Tile receiver){
 }
 
 public boolean checkDeath(Tile origin){
-	System.out.println(_playerTile.getRow());
-	System.out.println(_playerTile.getCol());
+	//System.out.println(_playerTile.getRow());
+	//System.out.println(_playerTile.getCol());
 	if ((_playerTile == origin) && (getPlayer().isDead())){
 		int pRow = _playerTile.getRow();
 		int pCol = _playerTile.getCol();
@@ -387,8 +425,8 @@ public boolean checkDeath(Tile origin){
 		ArrayQueue<Tile> holder = new ArrayQueue<Tile>(_monsterTileQueue.size());
 		int i = 0;
 		while(!(_monsterTileQueue.size() == 0)){
-			System.out.println("size " + _monsterTileQueue.size());
-			System.out.println("isEMpty: " + _monsterTileQueue.empty());
+			//System.out.println("size " + _monsterTileQueue.size());
+			//System.out.println("isEMpty: " + _monsterTileQueue.empty());
 			//System.out.println("queuelength: " + _monsterTileQueue.queuelength());
 			Tile temp = _monsterTileQueue.dequeue();
 			if(temp != deadTemp)
@@ -408,9 +446,89 @@ public boolean checkMonsterClear(){
 	return (_monsterTileQueue.size() == 0);
 }
 
-public void askMonsterMove(){
-	//NOT DONE
-}
+public void monsterRR(){
+        	 for(int i = 0; i < _monsterTileQueue.size(); i++){
+        		 Tile temp = _monsterTileQueue.dequeue();
+						 System.out.println("Servicing monster at" + temp.getRow() + "," + temp.getCol());
+						 if(!(temp.getRow() == _playerTile.getRow()) && !(temp.getCol() == _playerTile.getCol())){
+						LinkedList<Tile> movement = pathfind(temp, _playerTile);
+	           monstermove(temp, movement.get(1));
+	 					 temp = movement.get(1);
+					 }
+						 _monsterTileQueue.enqueue(temp);
+        	 }
+        }
+/*public void askMonsterMove(Tile _monsterTile){
+          LinkedList<Tile> movement = pathfind(_monsterTile, _playerTile);
+          monstermove(_monsterTile, movement.get(1));
+					_monsterTile = movement.get(1);
+        }*/
+        public int findLL(LinkedList<Tile> list, Tile item){
+          for(int i = 0 ; i < list.size(); i++){
+            if(list.get(i).equals(item)) return 1;
+          }
+          return -1;
+        }
+	public LinkedList<Tile> pathfind(Tile origin, Tile destination){
+	          LinkedList<Tile> closedList = new LinkedList<Tile>();
+	          closedList.add(origin);
+	          int min = 0;
+						Tile temp = closedList.getFirst();
+	          while(true){
+							Tile origtemp = temp;
+	            Tile up = _room[temp.getRow()-1][temp.getCol()];
+	            Tile left = _room[temp.getRow()][temp.getCol()-1];
+	            Tile down = _room[temp.getRow()+1][temp.getCol()];
+	            Tile right = _room[temp.getRow()][temp.getCol()+1];
+							if(findLL(closedList, down) == -1){
+								min = down.getmanhattanDist(destination);
+	              temp = down;
+							}
+	            if(left.getmanhattanDist(destination) <= min && findLL(closedList, left) == -1){
+								System.out.println("lt" + left.getmanhattanDist(destination));
+	              min = left.getmanhattanDist(destination);
+	              temp = left;
+	            }
+	            if(up.getmanhattanDist(destination) <= min && findLL(closedList, up) == -1){
+								System.out.println("up" + up.getmanhattanDist(destination));
+	              min = up.getmanhattanDist(destination);
+	              temp = up;
+	            }
+	            if(right.getmanhattanDist(destination) <= min && findLL(closedList, right) == -1){
+								System.out.println("rt" + right.getmanhattanDist(destination));
+	              min = right.getmanhattanDist(destination);
+	              temp = right;
+	            }
+							if(temp == origtemp){
+								if(up.getmanhattanDist(destination) != 1000 && findLL(closedList, up) == -1){
+									min = up.getmanhattanDist(destination);
+		              temp = up;
+								}
+								if(down.getmanhattanDist(destination) != 1000 && findLL(closedList, down) == -1){
+									min = down.getmanhattanDist(destination);
+		              temp = down;
+								}
+								if(left.getmanhattanDist(destination) != 1000 && findLL(closedList, left) == -1){
+									min = left.getmanhattanDist(destination);
+		              temp = left;
+								}
+								if(right.getmanhattanDist(destination) != 1000 && findLL(closedList, right) == -1){
+									min = right.getmanhattanDist(destination);
+		              temp = right;
+								}
+							}
+	            closedList.add(temp);
+							for(Tile x : closedList){
+								System.out.println(x.getRow() + "," + x.getCol());
+							}
+													System.out.println("__________________");
+						if(temp.getRow() == _playerTile.getRow() && temp.getCol() == _playerTile.getCol()) break;
+
+							//System.out.println(min);
+							//System.out.println(temp);
+	          }
+	          return closedList;
+	        }
 
 public ArrayQueue<Monster> getMonsters(){
 	return _monsterQueue;
