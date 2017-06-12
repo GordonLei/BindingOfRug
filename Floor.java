@@ -16,11 +16,11 @@ public class Floor extends PriorityQueue{
 		for (int i = 0; i < n; i++){
 			// 50% of making a squre room and not a square room.
 			if ((int) (Math.random() * 2) == 1){
-				Room squareRoom = new Room((int) (4 + Math.random() * 2));
+				Room squareRoom = new Room((int) (8 + Math.random() * 9));
 				_roomQueue.add(squareRoom);
 			}
 			else{
-				Room  rectRoom= new Room(((int) (4 + Math.random() * 2)), ((int) (4 +Math.random() * 2)));
+				Room  rectRoom= new Room(((int) (8 + Math.random() * 9)), ((int) (8 + Math.random() * 9)));
 				_roomQueue.add(rectRoom);
 			}
 		}
