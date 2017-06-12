@@ -38,7 +38,7 @@ public class Room implements Comparable{
 
 		for(int r = 0; r < _room.length; r++){
 			for(int c = 0; c < _room[r].length; c++){
-				if(_room[r][c].getType().equals("empty")&&Math.random()<0.02)
+				if(_room[r][c].getType().equals("empty")&&Math.random()<0.01)
 					_room[r][c] = new Tile("chest",r,c);
 			}
 		}
