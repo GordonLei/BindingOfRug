@@ -11,6 +11,7 @@ public class Tile{
 		_type = "empty";
 		_row = row;
 		_col = col;
+		_manhattanDist = 0;
 	}
 
 	//SPECIAL CONSTRUCTORS for custom Tiles
@@ -19,21 +20,24 @@ public class Tile{
 		_type = "empty";
 		_row = row;
 		_col = col;
+		_manhattanDist = 0;
 	}
 	public Tile(String type, int row, int col){
 		_entity = null;
 		_type = type;
 		_row = row;
 		_col = col;
+		_manhattanDist = 0;
 	}
 	public Tile(Creature entity, String type, int row, int col){
 		_entity = entity;
 		_type = type;
 		_row = row;
 		_col = col;
+		_manhattanDist = 0;
 	}
 	public void manhattanDist(Tile destination){
-                if(_type.equals("wall")) _manhattanDist = 1000;
+                if(_type.equals("wall") || _type.equals("chest")) _manhattanDist = 1000;
                 else{
                 	int dy = Math.abs(destination.getRow() - _row);
                 	int dx = Math.abs(destination.getCol() - _col);
