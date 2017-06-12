@@ -325,7 +325,46 @@ public void move(Tile origin, Tile destination){
 		return; //PROBABLY CHANGE
 	}
 }
+ public int monstermove(Tile origin, Tile destination){
+                //GOAL: swap the tiles + check walls + check if out of bounds
 
+                //Check if out of bound
+                if (destination.getRow() < 0 || destination.getRow() > _row ||
+                destination.getCol() < 0 || destination.getCol() > _col){
+                        return -1;
+                }
+
+                //Check if destination is empty
+                if(destination.getChar() == "_"){
+                        //SWAP ENTITIES
+                        int oRow = origin.getRow();
+                        int oCol = origin.getCol();
+                        int dRow = destination.getRow();
+                        int dCol = destination.getCol();
+
+                        Creature temp = origin.getEntity();
+                        _room[oRow][oCol].setEntity(destination.getEntity());
+                        _room[dRow][dCol].setEntity(temp);
+                        /*
+                        origin.setEntity(destination.getEntity());
+                        destination.setEntity(temp);
+                        */
+                        _playerTile = destination;
+                        return 1;
+                }
+
+                //Check if destination is a wall
+                else if(destination.getType().equals("wall"))){
+                        return -1;
+                }
+
+                //do stuff if destination has an entity
+                else{
+                        //ATTACK HERE <NOT DONE>
+                        attack(origin, destination);
+                        return 1; //PROBABLY CHANGE
+                }
+        }
 public void attack(Tile attacker, Tile receiver){
 	int aRow = attacker.getRow();
 	int aCol = attacker.getCol();
@@ -384,10 +423,53 @@ public boolean checkMonsterClear(){
 	//System.out.println(_monsterTileQueue.size());
 	return (_monsterTileQueue.size() == 0);
 }
-
-public void askMonsterMove(){
-	//NOT DONE
-}
+        public void monsterRR(){
+        	 for(int i = 0; i < _monsterTileQueue.size(); i++){
+        		 Tile temp = _monsterTileQueue.dequeue();
+        		 askMonsterMove(temp);
+        	 }
+        }
+        public void askMonsterMove(Tile _monsterTile){
+          LinkedList<E> movement = pathfind(_monsterTile, _playerTile);
+          monstermove(_monsterTile, movement.getFirst());
+        }
+        public int findLL(LinkedList<E> list, E item){
+          for(int i; i < list.size(); i++){
+            if(list.get(i).equals(item)) return 1;
+          }
+          return -1;
+        }
+        public LinkedList<E> pathfind(Tile origin, Tile destination){
+          LinkedList<E> openList = new LinkedList<E>();
+          LinkedList<E> closedList = new LinkedList<E>();
+          closedList.add(origin);
+          int min = 0;
+          while(true){
+            Tile up = _room[origin.getRow()-1][origin.getCol()];
+            Tile left = _room[origin.getRow()][origin.getCol()-1];
+            Tile down = _room[origin.getRow()+1][origin.getCol()];
+            Tile right = _room[origin.getRow()][origin.getCol()+1];
+            Tile temp = null;
+            if(findLL(closedList, right) == -1){
+              min = up.getmanhattanDist(destination);
+              temp = up;
+            }
+            if(left.getmanhattanDist(destination) < min && findLL(closedList, left) == -1){
+              min = left.getmanhattanDist(destination);
+              temp = left;
+            }
+            if(down.getmanhattanDist(destination) < min && findLL(closedList, down) == -1){
+              min = down.getmanhattanDist(destination);
+              temp = down;
+            }
+            if(right.getmanhattanDist(destination) < min && findLL(closedList, right) == -1){
+              min = right.getmanhattanDist(destination);
+              temp = right;
+            }
+            closedList.add(temp);
+          }
+          return closedList;
+        }
 
 public ArrayQueue<Monster> getMonsters(){
 	return _monsterQueue;
