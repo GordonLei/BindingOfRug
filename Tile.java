@@ -44,6 +44,9 @@ public class Tile{
 	public Creature getEntity(){
 		return _entity;
 	}
+	public String getType(){
+		return _type;
+	}
 	//get Tile's row
 	public int getRow(){
 		return _row;
@@ -61,6 +64,9 @@ public class Tile{
 		_col = col;
 	}
 
+	public void setType(String type){
+		_type = type;
+	}
 
 	//get ASCII / Unicode representation
 	public String getChar(){
