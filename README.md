@@ -21,6 +21,7 @@ However you can still change the code to reflect the better looking characters (
 - ex) IDE packages that emulate terminals (ex. platformio-ide-terminal package of the Atom IDE does not support ASCII characters of arrows)
 
 Monster Movement needs to be polished some more 
+
   Ex) There is a possibility that some monsters get stuck 
   
 # How to Play
