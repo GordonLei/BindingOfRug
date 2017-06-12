@@ -1,6 +1,6 @@
 import java.util.Scanner;
-//import java.util.Stack;
 import java.util.LinkedList;
+//import java.util.Stack;
 import lib.*;
 public class Room implements Comparable{
 	//Instance variables
@@ -35,6 +35,13 @@ public class Room implements Comparable{
 		}
 
 		generateWalls(row, column);
+
+		for(int r = 0; r < _room.length; r++){
+			for(int c = 0; c < _room[r].length; c++){
+				if(_room[r][c].getType().equals("empty")&&Math.random()<0.02)
+					_room[r][c] = new Tile("chest",r,c);
+			}
+		}
 		_playerTile = new Tile(_player, 1,1);
 		_room[1][1] = _playerTile;
 
@@ -46,7 +53,7 @@ public class Room implements Comparable{
 		for (int i = 0; i <  randMonNum; i++){
 			//int ranHealth = (int) (Math.random() * 10) * 10;
 			//int ranAttack = (int) (Math.random() * 10) * 2;
-			Monster enemy = new Monster(BindingOfRug._floorNumber);
+			Monster enemy = new Monster();
 			Tile enemyTile = _room[2 + (int)(Math.random() * (row-3))][2 + (int) (Math.random() * (column - 3))];
 			while((enemyTile != _playerTile) && !(enemyTile.getType().equals("empty")) && !(enemyTile.getEntity() == null)){
 				enemyTile = _room[2 + (int) ((Math.random()) * (row-3))][2 + (int) (Math.random() * (column - 3))];
@@ -174,6 +181,8 @@ public class Room implements Comparable{
 	}
 	//asks a player to move
 	public void askPlayerMove(){
+		System.out.println("Floor:"+BindingOfRug._floorNumber);
+		System.out.println("Health:"+getPlayer().getHealth());
 		Scanner s = new Scanner(System.in);
 		System.out.println("Input a direction");
 		String input = s.next();
@@ -188,7 +197,11 @@ public class Room implements Comparable{
 			if(input.equals("end")){
 				throw new BindingOfRugException("Ignore this error.It is stop the game! Have a nice day!");
 			}
-			System.out.println("Invalid direction. Input a direction as w,a,s,or d.");
+			if(input.equals("inv")){
+				System.out.println(getPlayer().getInventory()[0]+"\n"+getPlayer().getInventory()[1]);
+				System.out.println("\nInput a direction as w,a,s,or d.");
+			}
+			else System.out.println("Invalid direction. Input a direction as w,a,s,or d.");
 			input = s.next();
 
 		}
@@ -308,6 +321,8 @@ public void move(Tile origin, Tile destination){
 		destination.setType("empty");
 		Scanner s = new Scanner(System.in);
 		System.out.println("You received a new item!");
+		Item item=new Item();
+		System.out.println(item);
 		System.out.println("Do you want to keep this item? Type 'y' for yes, 'n' for no.");
 		System.out.println("(Without the apostrophes)");
 		String input = s.next();
@@ -315,16 +330,24 @@ public void move(Tile origin, Tile destination){
 			if(input.equals("end")){
 				throw new BindingOfRugException("Ignore this error.It is stop the game! Have a nice day!");
 			}
-			System.out.println("Invalid choice. Type 'y' for yes, 'n' for no.");
-			System.out.println("(Without the apostrophes)");
+			if(input.equals("inv")){
+				System.out.println(getPlayer().getInventory()[0]+"\n"+getPlayer().getInventory()[1]);
+				System.out.println("Type 'y' for yes, 'n' for no.");
+				System.out.println("(Without the apostrophes)");
+			}
+			else{
+				System.out.println("Invalid choice. Type 'y' for yes, 'n' for no.");
+				System.out.println("(Without the apostrophes)");
+			}
 			input = s.next();
 		}
 		if (input.equals('n')){
 			System.out.println("You dropped the item");
+			destination.setType("empty");
 			return;
 		}
 		else{
-			getPlayer().setInventory(null);//replace this with the item
+			getPlayer().pickUp(item);//replace this with the item
 		}
 
 	}
@@ -335,6 +358,7 @@ public void move(Tile origin, Tile destination){
 		return; //PROBABLY CHANGE
 	}
 }
+
 public int monstermove(Tile origin, Tile destination){
                 //GOAL: swap the tiles + check walls + check if out of bounds
 
@@ -373,6 +397,7 @@ public int monstermove(Tile origin, Tile destination){
 
 		return 1;
         }
+
 public void attack(Tile attacker, Tile receiver){
 	System.out.print("\033[H\033[2J");
 	System.out.flush();
@@ -380,15 +405,27 @@ public void attack(Tile attacker, Tile receiver){
 	int aCol = attacker.getCol();
 	int rRow = receiver.getRow();
 	int rCol = receiver.getCol();
-	System.out.println("attacker damage :" + (attacker.getEntity().dealDamage()));
-	_room[rRow][rCol].getEntity().takeDamage(attacker.getEntity().dealDamage());
+	//System.out.println("attacker damage :" + (attacker.getEntity().dealDamage()));
 	if(attacker == _playerTile){
-		System.out.println("Player dealt " + _room[aRow][aCol].getEntity().getAttack());
-		System.out.println("Enemy has " + _room[rRow][rCol].getEntity().getHealth() + " health");
+		if(Math.random()<getPlayer().getAccuracy()){
+			_room[rRow][rCol].getEntity().takeDamage(attacker.getEntity().dealDamage());
+			System.out.println("Player dealt " + _room[aRow][aCol].getEntity().getAttack());
+			System.out.println("Enemy has " + _room[rRow][rCol].getEntity().getHealth() + " health");
+		}
+		else System.out.println("You missed!");
 	}
 	if(attacker != _playerTile){
-		System.out.println("Monster dealt " + _room[aRow][aCol].getEntity().getAttack());
-		System.out.println("Player has " + _room[rRow][rCol].getEntity().getHealth() + " health");
+		if(Math.random()<getPlayer().getDexterity()){
+			_room[rRow][rCol].getEntity().takeDamage(attacker.getEntity().dealDamage());
+			System.out.println("Monster dealt " + _room[aRow][aCol].getEntity().getAttack() * (1-getPlayer().getDefense()));
+			System.out.println("Player has " + _room[rRow][rCol].getEntity().getHealth() + " health");
+			if(getPlayer().getThorn()!=0){
+				attacker.getEntity().takeDamage(getPlayer().getThorn());
+				System.out.println("Player dealt " + getPlayer().getThorn() + "in thorn damage");
+				System.out.println("Enemy has " + _room[rRow][rCol].getEntity().getHealth() + " health");
+			}
+		}
+		else System.out.println("You dodged monster's attack");
 	}
 	if ((attacker == _playerTile) && !((_room[rRow][rCol].getEntity()).isDead())){
 		_room[aRow][aCol].getEntity().takeDamage(receiver.getEntity().dealDamage());
@@ -409,8 +446,8 @@ public void attack(Tile attacker, Tile receiver){
 }
 
 public boolean checkDeath(Tile origin){
-	//System.out.println(_playerTile.getRow());
-	//System.out.println(_playerTile.getCol());
+	// System.out.println(_playerTile.getRow());
+	// System.out.println(_playerTile.getCol());
 	if ((_playerTile == origin) && (getPlayer().isDead())){
 		int pRow = _playerTile.getRow();
 		int pCol = _playerTile.getCol();
@@ -425,8 +462,8 @@ public boolean checkDeath(Tile origin){
 		ArrayQueue<Tile> holder = new ArrayQueue<Tile>(_monsterTileQueue.size());
 		int i = 0;
 		while(!(_monsterTileQueue.size() == 0)){
-			//System.out.println("size " + _monsterTileQueue.size());
-			//System.out.println("isEMpty: " + _monsterTileQueue.empty());
+			// System.out.println("size " + _monsterTileQueue.size());
+			// System.out.println("isEMpty: " + _monsterTileQueue.empty());
 			//System.out.println("queuelength: " + _monsterTileQueue.queuelength());
 			Tile temp = _monsterTileQueue.dequeue();
 			if(temp != deadTemp)
@@ -449,6 +486,7 @@ public boolean checkMonsterClear(){
 public void monsterRR(){
         	 for(int i = 0; i < _monsterTileQueue.size(); i++){
         		 Tile temp = _monsterTileQueue.dequeue();
+			 //System.out.println("Servicing monster at" + temp.getRow() + "," + temp.getCol() + "size" + _monsterTileQueue.size());
 			 if(!(temp.getRow() == _playerTile.getRow()) && !(temp.getCol() == _playerTile.getCol())){
 				LinkedList<Tile> movement = pathfind(temp, _playerTile);
 	           		monstermove(temp, movement.get(1));
@@ -473,7 +511,7 @@ public LinkedList<Tile> pathfind(Tile origin, Tile destination){
           closedList.add(origin);
           int min = 0;
 		Tile temp = closedList.getFirst();
-          while(true){					
+          while(true){
             Tile up = _room[temp.getRow()-1][temp.getCol()];
             Tile left = _room[temp.getRow()][temp.getCol()-1];
             Tile down = _room[temp.getRow()+1][temp.getCol()];
@@ -485,21 +523,21 @@ public LinkedList<Tile> pathfind(Tile origin, Tile destination){
 		}
 	}
             if(findLL(closedList, left) == -1 && left.getmanhattanDist(destination) <= min){
-		System.out.println("lt" + left.getmanhattanDist(destination));
+		//System.out.println("lt" + left.getmanhattanDist(destination));
 		if(left.getmanhattanDist(destination) != 1000){
                 min = left.getmanhattanDist(destination);
                 temp = left;
 		}
             }
             if(findLL(closedList, up) == -1 && up.getmanhattanDist(destination) <= min){
-		System.out.println("up" + up.getmanhattanDist(destination));
+		//System.out.println("up" + up.getmanhattanDist(destination));
 		if(up.getmanhattanDist(destination) != 1000){
 		min = up.getmanhattanDist(destination);
               	temp = up;
 		}
             }
             if(findLL(closedList, right) == -1 && right.getmanhattanDist(destination) <= min){
-		System.out.println("rt" + right.getmanhattanDist(destination));
+		//System.out.println("rt" + right.getmanhattanDist(destination));
 		if(right.getmanhattanDist(destination) != 1000){
 	     	min = right.getmanhattanDist(destination);
 	      	temp = right;
