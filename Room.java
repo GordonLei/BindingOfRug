@@ -301,7 +301,7 @@ public void move(Tile origin, Tile destination){
 	//Check if destination is a wall
 	else if(destination.getType().equals("wall")){//Char() == "█"){
 		System.out.println("You cannot move there");
-		return;
+		askPlayerMove();
 	}
 
 	else if(destination.getType().equals("chest")){//Char() == "⚀"){
@@ -335,55 +335,6 @@ public void move(Tile origin, Tile destination){
 		return; //PROBABLY CHANGE
 	}
 }
-public void monsterRandomMove(){
-	ArrayQueue<Tile> holder = new ArrayQueue<Tile>(_monsterTileQueue.size());
-	int i = 0;
-	String dir = "";
-	int randomPercentage = (int) (Math.random() * 4);
-	//while(!(_monsterTileQueue.size() == 0)){
-		Tile temp = _monsterTileQueue.dequeue();
-		int tempXcor = temp.getRow();
-		int tempYcor = temp.getCol();
-		holder.enqueue(temp);
-		i++;
-		if (randomPercentage == 0){
-			dir = "w";
-		}
-		if (randomPercentage == 1){
-			dir = "a";
-		}
-		if (randomPercentage == 2){
-			dir = "s";
-		}
-		if (randomPercentage == 3){
-			dir = "d";
-		}
-		//_room[wallXcor][wallYcor] = new Tile("wall", wallXcor, wallYcor);
-		while(!(_monsterTileQueue.size() == 0)){{
-			if(dir.equals("w")){
-				if(tempXcor + 1 < _row  && (_room[tempXcor + 1][tempYcor].getType()) != "wall"){
-					monstermove(temp,_room[tempXcor + 1][tempYcor]);
-				}
-			}
-			else if(dir.equals("a")){
-				if(tempYcor  - 1 > 0 && (_room[tempYcor][tempYcor - 1].getType()) != "wall"){
-					_room[tempYcor - 1][tempYcor].setType("wall");
-				}
-			}
-			else if(dir.equals("s")){
-				if(tempXcor - 1 > 0 && (_room[tempXcor - 1][tempXcor].getType()) != "wall"){
-					_room[tempXcor - 1][tempXcor].setType("wall");
-				}
-			}
-			else if(dir.equals("d")){
-				if(tempYcor + 1 < _col  && (_room[tempYcor][tempYcor + 1].getType()) != "wall"){
-					_room[tempYcor + 1][tempYcor].setType("wall");
-				}
-			}
-		}
-	_monsterTileQueue = holder;
-	}
-}
 public int monstermove(Tile origin, Tile destination){
                 //GOAL: swap the tiles + check walls + check if out of bounds
 
@@ -415,12 +366,12 @@ public int monstermove(Tile origin, Tile destination){
                         return -1;
                 }
 
-								else if(destination == _playerTile){
-												attack(origin, destination);
+		else if(destination == _playerTile){
+			attack(origin, destination);
                         return -1;
                 }
 
-								return 1;
+		return 1;
         }
 public void attack(Tile attacker, Tile receiver){
 	System.out.print("\033[H\033[2J");
@@ -498,13 +449,13 @@ public boolean checkMonsterClear(){
 public void monsterRR(){
         	 for(int i = 0; i < _monsterTileQueue.size(); i++){
         		 Tile temp = _monsterTileQueue.dequeue();
-						 System.out.println("Servicing monster at" + temp.getRow() + "," + temp.getCol());
-						 if(!(temp.getRow() == _playerTile.getRow()) && !(temp.getCol() == _playerTile.getCol())){
-						LinkedList<Tile> movement = pathfind(temp, _playerTile);
-	           monstermove(temp, movement.get(1));
-	 					 temp = movement.get(1);
-					 }
-						 _monsterTileQueue.enqueue(temp);
+			 System.out.println("Servicing monster at" + temp.getRow() + "," + temp.getCol() + "size" + _monsterTileQueue.size());
+			 if(!(temp.getRow() == _playerTile.getRow()) && !(temp.getCol() == _playerTile.getCol())){
+				LinkedList<Tile> movement = pathfind(temp, _playerTile);
+	           		monstermove(temp, movement.get(1));
+				temp = movement.get(1);
+			 }
+		 	_monsterTileQueue.enqueue(temp);
         	 }
         }
 /*public void askMonsterMove(Tile _monsterTile){
@@ -518,66 +469,56 @@ public void monsterRR(){
           }
           return -1;
         }
-	public LinkedList<Tile> pathfind(Tile origin, Tile destination){
-	          LinkedList<Tile> closedList = new LinkedList<Tile>();
-	          closedList.add(origin);
-	          int min = 0;
-						Tile temp = closedList.getFirst();
-	          while(true){
-							Tile origtemp = temp;
-	            Tile up = _room[temp.getRow()-1][temp.getCol()];
-	            Tile left = _room[temp.getRow()][temp.getCol()-1];
-	            Tile down = _room[temp.getRow()+1][temp.getCol()];
-	            Tile right = _room[temp.getRow()][temp.getCol()+1];
-							if(findLL(closedList, down) == -1){
-								min = down.getmanhattanDist(destination);
-	              temp = down;
-							}
-	            if(left.getmanhattanDist(destination) <= min && findLL(closedList, left) == -1){
-								System.out.println("lt" + left.getmanhattanDist(destination));
-	              min = left.getmanhattanDist(destination);
-	              temp = left;
-	            }
-	            if(up.getmanhattanDist(destination) <= min && findLL(closedList, up) == -1){
-								System.out.println("up" + up.getmanhattanDist(destination));
-	              min = up.getmanhattanDist(destination);
-	              temp = up;
-	            }
-	            if(right.getmanhattanDist(destination) <= min && findLL(closedList, right) == -1){
-								System.out.println("rt" + right.getmanhattanDist(destination));
-	              min = right.getmanhattanDist(destination);
-	              temp = right;
-	            }
-							if(temp == origtemp){
-								if(up.getmanhattanDist(destination) != 1000 && findLL(closedList, up) == -1){
-									min = up.getmanhattanDist(destination);
-		              temp = up;
-								}
-								if(down.getmanhattanDist(destination) != 1000 && findLL(closedList, down) == -1){
-									min = down.getmanhattanDist(destination);
-		              temp = down;
-								}
-								if(left.getmanhattanDist(destination) != 1000 && findLL(closedList, left) == -1){
-									min = left.getmanhattanDist(destination);
-		              temp = left;
-								}
-								if(right.getmanhattanDist(destination) != 1000 && findLL(closedList, right) == -1){
-									min = right.getmanhattanDist(destination);
-		              temp = right;
-								}
-							}
-	            closedList.add(temp);
-							for(Tile x : closedList){
-								System.out.println(x.getRow() + "," + x.getCol());
-							}
-													System.out.println("__________________");
-						if(temp.getRow() == _playerTile.getRow() && temp.getCol() == _playerTile.getCol()) break;
+public LinkedList<Tile> pathfind(Tile origin, Tile destination){
+          LinkedList<Tile> closedList = new LinkedList<Tile>();
+          closedList.add(origin);
+          int min = 0;
+		Tile temp = closedList.getFirst();
+          while(true){					
+            Tile up = _room[temp.getRow()-1][temp.getCol()];
+            Tile left = _room[temp.getRow()][temp.getCol()-1];
+            Tile down = _room[temp.getRow()+1][temp.getCol()];
+            Tile right = _room[temp.getRow()][temp.getCol()+1];
+	if(findLL(closedList, down) == -1){
+		if(down.getmanhattanDist(destination) != 1000){
+		min = down.getmanhattanDist(destination);
+                temp = down;
+		}
+	}
+            if(findLL(closedList, left) == -1 && left.getmanhattanDist(destination) <= min){
+		System.out.println("lt" + left.getmanhattanDist(destination));
+		if(left.getmanhattanDist(destination) != 1000){
+                min = left.getmanhattanDist(destination);
+                temp = left;
+		}
+            }
+            if(findLL(closedList, up) == -1 && up.getmanhattanDist(destination) <= min){
+		System.out.println("up" + up.getmanhattanDist(destination));
+		if(up.getmanhattanDist(destination) != 1000){
+		min = up.getmanhattanDist(destination);
+              	temp = up;
+		}
+            }
+            if(findLL(closedList, right) == -1 && right.getmanhattanDist(destination) <= min){
+		System.out.println("rt" + right.getmanhattanDist(destination));
+		if(right.getmanhattanDist(destination) != 1000){
+	     	min = right.getmanhattanDist(destination);
+	      	temp = right;
+						}
+            }
+            closedList.add(temp);
+		if(closedList.size() > 30) break;
+		/*for(Tile x : closedList){
+			System.out.println(x.getRow() + "," + x.getCol());
+						}
+			System.out.println("__________________");*/
+					if(temp.getRow() == _playerTile.getRow() && temp.getCol() == _playerTile.getCol()) break;
 
-							//System.out.println(min);
-							//System.out.println(temp);
-	          }
-	          return closedList;
-	        }
+						//System.out.println(min);
+						//System.out.println(temp);
+          }
+          return closedList;
+        }
 
 public ArrayQueue<Monster> getMonsters(){
 	return _monsterQueue;
