@@ -29,6 +29,17 @@ Monster Movement needs to be polished some more
 2. Java BindingOfRug.
 3. Read and follow any directions and enjoy!
 
+# Controls
+- w to go up
+- a to go left
+- s to go down
+- d to go down
+- Move into a monster to attack it
+- Move into a chest to open it
+- y/n to respond to item prompt
+- inv to show held items
+- end to exit the game
+
 # Complicated Data Structure "Map" + How it works
 - _floorStack is a stack of Floors
 - Floors are priorityqueues that contain Rooms
@@ -52,7 +63,7 @@ Monster Movement needs to be polished some more
 # Random Item Generation
 - When a player opens a chest, a random Item is generated.
 - Items have 4 different rarities: common, rare, epic, and legendary.
-  -The number of effects and power of effects increases with rarity
+  - The number of effects and power of effects increases with rarity
 - Items have a random _effects array of Effects, which are randomly generated from a preset list of effects
   - Effects can be positive or negative
 - Item power ramps up with level, which is determined by the floor it is found in.
