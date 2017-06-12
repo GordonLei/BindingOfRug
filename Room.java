@@ -416,8 +416,8 @@ public void attack(Tile attacker, Tile receiver){
 	}
 	if(attacker != _playerTile){
 		if(Math.random()<getPlayer().getDexterity()){
-			_room[rRow][rCol].getEntity().takeDamage(attacker.getEntity().dealDamage());
-			System.out.println("Monster dealt " + _room[aRow][aCol].getEntity().getAttack() * (1-getPlayer().getDefense()));
+			_room[rRow][rCol].getEntity().takeDamage((int)(attacker.getEntity().dealDamage() * (1-getPlayer().getDefense()) ));
+			System.out.println("Monster dealt " + (int)(_room[aRow][aCol].getEntity().getAttack() * (1-getPlayer().getDefense())));
 			System.out.println("Player has " + _room[rRow][rCol].getEntity().getHealth() + " health");
 			if(getPlayer().getThorn()!=0){
 				attacker.getEntity().takeDamage(getPlayer().getThorn());
