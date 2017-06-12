@@ -1,7 +1,10 @@
 # What is BindingOfRug?
 Basically, BindingOfRug is the game Rouge played in your terminal / console.
 The goal of the player is to defeat every monster in each room to progress through the floors and eventually "escape" the dungeon. 
-To help him/her on his way, there are randomly spawned items (in chests) that increase or decrease his/her stats. The player can deicide to keep the item or not take take the item as he / she sees fit.
+
+To help him/her on his way, there are randomly spawned items (in chests) that increase or decrease his/her stats. 
+
+The player can deicide to keep the item or not take take the item as he / she sees fit.
 
 
 # Bugs / Possible Errors
@@ -9,8 +12,11 @@ Depending on what OS you are using, the terminal / command prompt / console may 
 
 Ex) Emptying the console only works in Linux / Macs
 NOTE: Works kinda weird due to ordering (if you walk to a wall it does not print the room).
+
 Ex) ASCII / unicode characters may not work depending on the OS. 
-NOTE: This is now deprecaetd since we are using letters and symbols found on the keyboard. However you can still change the code to reflect the better looking characters (most of these characters can be found commented in methods).
+NOTE: This is now deprecaetd since we are using letters and symbols found on the keyboard. 
+
+However you can still change the code to reflect the better looking characters (most of these characters can be found commented in methods).
 
 - ex) IDE packages that emulate terminals (ex. platformio-ide-terminal package of the Atom IDE does not support ASCII characters of arrows)
 
