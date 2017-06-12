@@ -428,10 +428,17 @@ public void attack(Tile attacker, Tile receiver){
 		else System.out.println("You dodged monster's attack");
 	}
 	if ((attacker == _playerTile) && !((_room[rRow][rCol].getEntity()).isDead())){
-		_room[aRow][aCol].getEntity().takeDamage(receiver.getEntity().dealDamage());
-		System.out.println("Enemy dealt " + _room[rRow][rCol].getEntity().getAttack());
-		System.out.println("Player has " + _room[aRow][aCol].getEntity().getHealth() + " health");
-		checkDeath(attacker);
+		if(Math.random()<getPlayer().getDexterity()){
+			_room[aRow][aCol].getEntity().takeDamage((int)(receiver.getEntity().dealDamage() * (1-getPlayer().getDefense()) ));
+			System.out.println("Monster dealt " + (int)(_room[rRow][rCol].getEntity().getAttack() * (1-getPlayer().getDefense())));
+			System.out.println("Player has " + _room[aRow][aCol].getEntity().getHealth() + " health");
+			if(getPlayer().getThorn()!=0){
+				receiver.getEntity().takeDamage(getPlayer().getThorn());
+				System.out.println("Player dealt " + getPlayer().getThorn() + "in thorn damage");
+				System.out.println("Enemy has " + _room[rRow][rCol].getEntity().getHealth() + " health");
+			}
+		}
+		else System.out.println("You dodged monster's attack");
 	}
 	if (attacker != _playerTile && !(_room[rRow][rCol].getEntity().isDead())){
 		_room[aRow][aCol].getEntity().takeDamage(receiver.getEntity().dealDamage());
