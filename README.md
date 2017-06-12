@@ -1,7 +1,7 @@
 # What is BindingOfRug?
 Basically, BindingOfRug is the game Rouge played in your terminal / console.
 The goal of the player is to defeat every monster in each room to progress through the floors and eventually "escape" the dungeon. 
-To help him/her on his way, there are randomly spawned items that increase or decrease his/her stats. 
+To help him/her on his way, there are randomly spawned items (in chests) that increase or decrease his/her stats. The player can deicide to keep the item or not take take the item as he / she sees fit.
 
 
 # Bugs / Possible Errors
@@ -9,7 +9,9 @@ Depending on what OS you are using, the terminal / command prompt / console may 
 
 Ex) Emptying the console only works in Linux / Macs
 
-Ex) ASCII / unicode characters may not work depending on the OS
+Ex) ASCII / unicode characters may not work depending on the OS. 
+NOTE: This is now deprecaetd since we are using letters and symbols found on the keyboard. However you can still change the code to reflect the better looking characters (most of these characters can be found commented in methods).
+
 - ex) IDE packages that emulate terminals (ex. platformio-ide-terminal package of the Atom IDE does not support ASCII characters of arrows)
 
 Monster Movement needs to be polished some more 
@@ -20,12 +22,22 @@ Monster Movement needs to be polished some more
 2. Java BindingOfRug.
 3. Read and follow any directions and enjoy!
 
-# Complicated Data Structure "Map"
+# Complicated Data Structure "Map" + How it works
 - _floorStack is a stack of Floors
-- Floors are priorityqueues with ___________ precedence (in other words the player enters the ________ room first).
+- Floors are priorityqueues that contain Rooms
 - Rooms are two-dimensional arrays with Tile objects that represent the spaces within the room.
+  - For the most part, every action is done within the Room but they affect instance variables within the Tile(s).
 - Tile objects hold an entity (a monster, player, or null) and have a type (space or a wall).
-
+   - Actions edit the entities (monsters or players) or the types of the Tiles (wall, chest ,or empty space)
+- Spawning
+  - Players always spawn at _room[1][1]. 
+  - Monsters spawn randomly and replace the Tile's type to "empty". 
+  - Chests spawn randomly.
+- Attacking
+  - Attack(Tile t1, Tile t2) takes in 2 tiles, where t1 is the attacking Tile and t2 is the Tile receiving the damage.
+- General Movement:
+  - the move methods swap the entities of adjacent Tile(s) and also checks if the types of the Tile(s) are walls / chests.
+    - If so, then entities can move onto walls and chests disappear if the Player steps on it.
 - Monster Movement:
   Version of the A* algorithm - checks all tiles around it and "moves" to the one with the closest manhattandistance. 
    - It does this by adding itself to a closedlist such that the next tile cannot be one it already visited - should not get stuck.
