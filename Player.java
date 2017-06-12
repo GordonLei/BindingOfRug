@@ -13,7 +13,8 @@ public class Player extends Creature{
 
 	//get representation of the Player
 	public String getChar(){
-		return "⚇";
+		return "P";
+		//return "⚇";
 	}
 
 	public int getHealth(){

@@ -271,7 +271,7 @@ public void move(Tile origin, Tile destination){
 	}
 
 	//Check if destination is empty
-	if(destination.getChar() == "_"){
+	if(destination.getChar().equals(" ")){//"_"){
 		//SWAP ENTITIES
 		int oRow = origin.getRow();
 		int oCol = origin.getCol();
@@ -289,12 +289,12 @@ public void move(Tile origin, Tile destination){
 	}
 
 	//Check if destination is a wall
-	else if(destination.getChar() == "█"){
+	else if(destination.getType().equals("wall")){//Char() == "█"){
 		System.out.println("You cannot move there");
 		return;
 	}
 
-	else if(destination.getChar() == "⚀"){
+	else if(destination.getType().equals("chest")){//Char() == "⚀"){
 		destination.setType("empty");
 		Scanner s = new Scanner(System.in);
 		System.out.println("You received a new item!");

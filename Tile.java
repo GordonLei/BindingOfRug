@@ -74,12 +74,14 @@ public class Tile{
 			return _entity.getChar();
 		}
 		else if(_type.equals("wall"))
-			return "█";
+			return "#";
+			//return "█";
 		else if(_type.equals("chest"))
-			return "⚀";
+			return "C";
+			//return "⚀";
 		//if not a special type of wall this Tile is empty.
 		else{
-			return "_";
+			return " ";
 		}
 	}
 }
