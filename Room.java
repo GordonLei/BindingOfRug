@@ -47,7 +47,7 @@ public class Room implements Comparable{
 			//int ranAttack = (int) (Math.random() * 10) * 2;
 			Monster enemy = new Monster();
 			Tile enemyTile = _room[1 + (int)(Math.random() * (row-2))][1 + (int) (Math.random() * (column - 2))];
-			while(!(enemyTile.getEntity() == null)){
+			while(enemyTile.getType() == "empty" && !(enemyTile.getEntity() == null)){
 				enemyTile = _room[1 + (int) ((Math.random()) * (row-2))][1 + (int) (Math.random() * (column - 2))];
 			}
 			enemyTile.setEntity(enemy);
@@ -189,9 +189,7 @@ public class Room implements Comparable{
 	/*
 	CHANGE TILES THING
 	*/
-	public void message(String message){
-		System.out.println(message);
-	}
+
 
 	public Boolean isValidMove(String input){
 		int row = _playerTile.getRow();
@@ -231,7 +229,7 @@ public class Room implements Comparable{
 			//((Player)(_room[row][col].getEntity())).checkAttack();
 			input = input.substring(1,2);
 			if (!isValidMove(input)){
-				message("You cannot move there");
+				System.out.println("You cannot move there");
 			}
 			else if (input.equals("w")){
 				attack(_room[row][col], _room[row - 1][col]);
@@ -247,7 +245,7 @@ public class Room implements Comparable{
 		}
 	}
 	else if (!isValidMove(input)){
-		message("You cannot move there");
+		System.out.println("You cannot move there");
 	}
 	else if (input.equals("w")){
 		move(_room[row][col], _room[row - 1][col]);
@@ -296,6 +294,30 @@ public void move(Tile origin, Tile destination){
 		return;
 	}
 
+	else if(destination.getChar() == "⚀"){
+		destination.setType("empty");
+		Scanner s = new Scanner(System.in);
+		System.out.println("You received a new item!");
+		System.out.println("Do you want to keep this item? Type 'y' for yes, 'n' for no.");
+		System.out.println("(Without the apostrophes)");
+		String input = s.next();
+		while ("yn".indexOf(input) < 0){
+			if(input.equals("end")){
+				throw new BindingOfRugException("Ignore this error.It is stop the game! Have a nice day!");
+			}
+			System.out.println("Invalid choice. Type 'y' for yes, 'n' for no.");
+			System.out.println("(Without the apostrophes)");
+			input = s.next();
+		}
+		if (input.equals('n')){
+			System.out.println("You dropped the item");
+			return;
+		}
+		else{
+			getPlayer().setInventory(null);//replace this with the item
+		}
+
+	}
 	//do stuff if destination has an entity
 	else{
 		//ATTACK HERE <NOT DONE>
