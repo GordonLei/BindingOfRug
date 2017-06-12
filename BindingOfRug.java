@@ -32,12 +32,16 @@ public class BindingOfRug{
 			_currentFloor = (_floorStack.pop());
 			//check if there are still rooms within a Floor...
 			while(!(_currentFloor.checkDone())){
-				System.out.println(_currentFloor.size());
+				//System.out.println(_currentFloor.size());
 				_currentRoom = (Room) (_currentFloor.getRooms().peek());
-				System.out.println(_currentRoom == null);
+				//System.out.println(_currentRoom == null);
 				_currentRoom.updatePlayer(_player);
 				//then check if the _currentRoom is Done...
 				while(!_currentRoom.checkDone()){
+					/*
+					System.out.print("\033[H\033[2J");
+					System.out.flush();
+					*/
 					_currentRoom.print();
 					_currentRoom.askPlayerMove();
 					if(_currentRoom.checkMonsterClear()){

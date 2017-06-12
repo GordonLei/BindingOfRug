@@ -2,7 +2,7 @@ public class Tile{
 	//instance varaibles
 	private Creature _entity;
 	private String _type;
-	private int _row, _col, _manhattanDist;
+	private int _row, _col;
 
 	//constructor for default Tile
 	public Tile(int row, int col){
@@ -18,21 +18,18 @@ public class Tile{
 		_type = "empty";
 		_row = row;
 		_col = col;
-		_manhattanDist = 0;
 	}
 	public Tile(String type, int row, int col){
 		_entity = null;
 		_type = type;
 		_row = row;
 		_col = col;
-		_manhattanDist = 0;
 	}
 	public Tile(Creature entity, String type, int row, int col){
 		_entity = entity;
 		_type = type;
 		_row = row;
 		_col = col;
-		_manhattanDist = 0;
 	}
 
 	//Delete entity on Tile
@@ -70,19 +67,7 @@ public class Tile{
 	public void setType(String type){
 		_type = type;
 	}
-	public void manhattanDist(Tile destination){
-                if(_type.equals("wall")) _manhattanDist = 1000;
-                else{
-                	int dy = Math.abs(destination.getRow() - _row);
-                	int dx = Math.abs(destination.getCol() - _col);
-                	int mandist = dx+dy;
-                _manhattanDist = mandist;
-              }
-        }
-          public int getmanhattanDist(Tile destination){
-            manhattanDist(destination);
-            return _manhattanDist;
-          }
+
 	//get ASCII / Unicode representation
 	public String getChar(){
 		if(getEntity() != null){

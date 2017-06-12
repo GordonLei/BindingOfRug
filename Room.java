@@ -47,9 +47,10 @@ public class Room implements Comparable{
 			//int ranAttack = (int) (Math.random() * 10) * 2;
 			Monster enemy = new Monster();
 			Tile enemyTile = _room[1 + (int)(Math.random() * (row-2))][1 + (int) (Math.random() * (column - 2))];
-			while(enemyTile.getType() == "empty" && !(enemyTile.getEntity() == null)){
+			while((enemyTile != _playerTile)&& !(enemyTile.getType().equals("empty")) && !(enemyTile.getEntity() == null)){
 				enemyTile = _room[1 + (int) ((Math.random()) * (row-2))][1 + (int) (Math.random() * (column - 2))];
 			}
+			enemyTile.setType("empty");
 			enemyTile.setEntity(enemy);
 			_monsterTileQueue.enqueue(enemyTile);
 			//_monsterQueue.enqueue(enemy);
@@ -71,6 +72,7 @@ public class Room implements Comparable{
 		String dir = "";
 		int randomPercentage = (int) (Math.random() * 4);
 		//Tile temp = _room[wallXcor][wallYcor];
+
 		if (randomPercentage == 0){
 			dir = "w";
 		}
@@ -140,6 +142,7 @@ public class Room implements Comparable{
 			}
 		}
 
+
 	}
 	//displays the room
 	public void print(){
@@ -175,7 +178,12 @@ public class Room implements Comparable{
 		String input = s.next();
 		//Check if a direction is inputed.
 		//If not loop again3
+		if(input.equals("wwssadadbaSTART")){
+			System.out.println("RESTARTED GAME");
+			throw new BindingOfRugException("YOU THOUGHT ENTERING THE KONAMI CODE WILL BEAT THE GAME BUT IT WAS ME, RUNTIME ERROR!");
+		}
 		while ("wasd".indexOf(input) < 0){
+
 			if(input.equals("end")){
 				throw new BindingOfRugException("Ignore this error.It is stop the game! Have a nice day!");
 			}
@@ -263,7 +271,8 @@ public class Room implements Comparable{
 
 public void move(Tile origin, Tile destination){
 	//GOAL: swap the tiles + check walls + check if out of bounds
-
+	System.out.print("\033[H\033[2J");
+	System.out.flush();
 	//Check if out of bound
 	if (destination.getRow() < 0 || destination.getRow() > _row ||
 	destination.getCol() < 0 || destination.getCol() > _col){
@@ -325,59 +334,34 @@ public void move(Tile origin, Tile destination){
 		return; //PROBABLY CHANGE
 	}
 }
- public int monstermove(Tile origin, Tile destination){
-                //GOAL: swap the tiles + check walls + check if out of bounds
 
-                //Check if out of bound
-                if (destination.getRow() < 0 || destination.getRow() > _row ||
-                destination.getCol() < 0 || destination.getCol() > _col){
-                        return -1;
-                }
-
-                //Check if destination is empty
-                if(destination.getChar() == "_"){
-                        //SWAP ENTITIES
-                        int oRow = origin.getRow();
-                        int oCol = origin.getCol();
-                        int dRow = destination.getRow();
-                        int dCol = destination.getCol();
-
-                        Creature temp = origin.getEntity();
-                        _room[oRow][oCol].setEntity(destination.getEntity());
-                        _room[dRow][dCol].setEntity(temp);
-                        /*
-                        origin.setEntity(destination.getEntity());
-                        destination.setEntity(temp);
-                        */
-                        _playerTile = destination;
-                        return 1;
-                }
-
-                //Check if destination is a wall
-                else if(destination.getType().equals("wall"))){
-                        return -1;
-                }
-
-                //do stuff if destination has an entity
-                else{
-                        //ATTACK HERE <NOT DONE>
-                        attack(origin, destination);
-                        return 1; //PROBABLY CHANGE
-                }
-        }
 public void attack(Tile attacker, Tile receiver){
+	System.out.print("\033[H\033[2J");
+	System.out.flush();
 	int aRow = attacker.getRow();
 	int aCol = attacker.getCol();
 	int rRow = receiver.getRow();
 	int rCol = receiver.getCol();
 	System.out.println("attacker damage :" + (attacker.getEntity().dealDamage()));
 	_room[rRow][rCol].getEntity().takeDamage(attacker.getEntity().dealDamage());
-	System.out.println("Player dealt " + _room[aRow][aCol].getEntity().getAttack());
-	System.out.println("Enemy has " + _room[rRow][rCol].getEntity().getHealth() + " health");
-	if (!_room[rRow][rCol].getEntity().isDead()){
+	if(attacker == _playerTile){
+		System.out.println("Player dealt " + _room[aRow][aCol].getEntity().getAttack());
+		System.out.println("Enemy has " + _room[rRow][rCol].getEntity().getHealth() + " health");
+	}
+	if(attacker != _playerTile){
+		System.out.println("Monster dealt " + _room[aRow][aCol].getEntity().getAttack());
+		System.out.println("Player has " + _room[rRow][rCol].getEntity().getHealth() + " health");
+	}
+	if ((attacker == _playerTile) && !((_room[rRow][rCol].getEntity()).isDead())){
 		_room[aRow][aCol].getEntity().takeDamage(receiver.getEntity().dealDamage());
 		System.out.println("Enemy dealt " + _room[rRow][rCol].getEntity().getAttack());
 		System.out.println("Player has " + _room[aRow][aCol].getEntity().getHealth() + " health");
+		checkDeath(attacker);
+	}
+	if (attacker != _playerTile && !(_room[rRow][rCol].getEntity().isDead())){
+		_room[aRow][aCol].getEntity().takeDamage(receiver.getEntity().dealDamage());
+		System.out.println("Player dealt " + _room[rRow][rCol].getEntity().getAttack());
+		System.out.println("Enemy has " + _room[aRow][aCol].getEntity().getHealth() + " health");
 		checkDeath(attacker);
 	}
 	else{
@@ -423,53 +407,10 @@ public boolean checkMonsterClear(){
 	//System.out.println(_monsterTileQueue.size());
 	return (_monsterTileQueue.size() == 0);
 }
-        public void monsterRR(){
-        	 for(int i = 0; i < _monsterTileQueue.size(); i++){
-        		 Tile temp = _monsterTileQueue.dequeue();
-        		 askMonsterMove(temp);
-        	 }
-        }
-        public void askMonsterMove(Tile _monsterTile){
-          LinkedList<E> movement = pathfind(_monsterTile, _playerTile);
-          monstermove(_monsterTile, movement.getFirst());
-        }
-        public int findLL(LinkedList<E> list, E item){
-          for(int i; i < list.size(); i++){
-            if(list.get(i).equals(item)) return 1;
-          }
-          return -1;
-        }
-        public LinkedList<E> pathfind(Tile origin, Tile destination){
-          LinkedList<E> openList = new LinkedList<E>();
-          LinkedList<E> closedList = new LinkedList<E>();
-          closedList.add(origin);
-          int min = 0;
-          while(true){
-            Tile up = _room[origin.getRow()-1][origin.getCol()];
-            Tile left = _room[origin.getRow()][origin.getCol()-1];
-            Tile down = _room[origin.getRow()+1][origin.getCol()];
-            Tile right = _room[origin.getRow()][origin.getCol()+1];
-            Tile temp = null;
-            if(findLL(closedList, right) == -1){
-              min = up.getmanhattanDist(destination);
-              temp = up;
-            }
-            if(left.getmanhattanDist(destination) < min && findLL(closedList, left) == -1){
-              min = left.getmanhattanDist(destination);
-              temp = left;
-            }
-            if(down.getmanhattanDist(destination) < min && findLL(closedList, down) == -1){
-              min = down.getmanhattanDist(destination);
-              temp = down;
-            }
-            if(right.getmanhattanDist(destination) < min && findLL(closedList, right) == -1){
-              min = right.getmanhattanDist(destination);
-              temp = right;
-            }
-            closedList.add(temp);
-          }
-          return closedList;
-        }
+
+public void askMonsterMove(){
+	//NOT DONE
+}
 
 public ArrayQueue<Monster> getMonsters(){
 	return _monsterQueue;
