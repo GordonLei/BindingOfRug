@@ -1,4 +1,3 @@
-//import java.util.LinkedList<E>;
 public class Tile{
 	//instance varaibles
 	private Creature _entity;
@@ -36,6 +35,7 @@ public class Tile{
 		_col = col;
 		_manhattanDist = 0;
 	}
+
 	public void manhattanDist(Tile destination){
                 if(_type.equals("wall") || _type.equals("chest")) _manhattanDist = 1000;
                 else{
@@ -49,6 +49,7 @@ public class Tile{
             manhattanDist(destination);
             return _manhattanDist;
           }
+
 	//Delete entity on Tile
 	public void deleteEntity(){
 		_entity = null;

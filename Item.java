@@ -7,7 +7,7 @@ public class Item{
 
     public Item(){
         _type = TYPES[(int)(Math.random()*3)];
-		_level = BindingOfRug._floorNumber;
+		_level = BindingOfRug._floorNumber-1;
         double rarityIndex=Math.random();
         if(rarityIndex<0.60){ _rarity="Common"; _effects = new Effect[3];}
         else if(rarityIndex<0.85){ _rarity="Rare"; _effects = new Effect[4];}
