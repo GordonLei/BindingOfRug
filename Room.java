@@ -362,7 +362,7 @@ public int monstermove(Tile origin, Tile destination){
                         return 1;
                 }
                 //Check if destination is a wall
-                else if(destination.getType().equals("wall")){
+                else if(destination.getType().equals("wall") || destination.getType().equals("chest")){
                         return -1;
                 }
 
