@@ -8,7 +8,7 @@ To help him/her on his way, there are randomly spawned items (in chests) that in
 Depending on what OS you are using, the terminal / command prompt / console may act strangely due to code not necessarily working for that OS.
 
 Ex) Emptying the console only works in Linux / Macs
-
+NOTE: Works kinda weird due to ordering (if you walk to a wall it does not print the room).
 Ex) ASCII / unicode characters may not work depending on the OS. 
 NOTE: This is now deprecaetd since we are using letters and symbols found on the keyboard. However you can still change the code to reflect the better looking characters (most of these characters can be found commented in methods).
 
