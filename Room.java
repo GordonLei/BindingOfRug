@@ -536,7 +536,7 @@ public LinkedList<Tile> pathfind(Tile origin, Tile destination){
             Tile right = _room[temp.getRow()][temp.getCol()+1];
 		min = temp.getmanhattanDist(destination);
   if(findLL(closedList, left) == -1 && left.getmanhattanDist(destination) <= min){
-		System.out.println("lt" + left.getmanhattanDist(destination));
+		//System.out.println("lt" + left.getmanhattanDist(destination));
 		if(left.getmanhattanDist(destination) != 1000){
                 min = left.getmanhattanDist(destination);
                 temp = left;
@@ -566,9 +566,9 @@ public LinkedList<Tile> pathfind(Tile origin, Tile destination){
             closedList.add(temp);
 		if(closedList.size() > 30) break;
 		for(Tile x : closedList){
-			System.out.println(x.getRow() + "," + x.getCol());
+			//System.out.println(x.getRow() + "," + x.getCol());
 						}
-			System.out.println("__________________");
+			//System.out.println("__________________");
 
 
 						//System.out.println(min);
