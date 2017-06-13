@@ -7,7 +7,7 @@ public class Player extends Creature{
 	//Player starting stats
 	public Player(){
 		_health = 100;
-		_speed = 1;
+		_speed = 2;
 		_attack = 0;
 		_accuracy = .70;
 		_dexterity = .70;
@@ -41,6 +41,7 @@ public class Player extends Creature{
 	}
 
 	public int getSpeed(){
+		if(_speed<=1) return 1;
 		return _speed;
 	}
 
@@ -86,7 +87,7 @@ public class Player extends Creature{
 							_health+=effect.getPower()*25*newItem.getLevel();
 							break;
 						case "ATK":
-							_attack+=(effect.getPower()*10)*newItem.getLevel();
+							_attack+=(effect.getPower()*5)*newItem.getLevel();
 							break;
 					}
 				}
