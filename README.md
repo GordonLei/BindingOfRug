@@ -73,10 +73,10 @@ Monster Movement needs to be polished some more
 - SPD-Increases actions per turn by 1 per effect power.
 - DEX-Increases chance to dodge attack by 5% per effect power.
 - HP-Increases health by 25 per item level per effect power.
-- ATK-Increases attack by 10 per item level per effect power.
+- ATK-Increases attack by 5 per item level per effect power.
 - ACC-Increases chance to hit by 5% per effect power.
 - DEF-Decreases damage taken by 5% per effect power.
-- THRN-Armor does 10 damage per item level per effect power when a monster attacks you.
+- THRN-Armor does 5 damage per item level per effect power when a monster attacks you.
 
 # ASCII / UNICODE character guideline & representation
 - \"#" = wall
