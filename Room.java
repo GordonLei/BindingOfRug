@@ -494,7 +494,7 @@ public boolean checkMonsterClear(){
 public void monsterRR(){
 	 for(int i = 0; i < _monsterTileQueue.size(); i++){
 		 Tile temp = _monsterTileQueue.dequeue();
-		 System.out.println("Servicing monster at" + temp.getRow() + "," + temp.getCol() + "size" + _monsterTileQueue.size());
+		 //System.out.println("Servicing monster at" + temp.getRow() + "," + temp.getCol() + "size" + _monsterTileQueue.size());
 		 LinkedList<Tile> movement = pathfind(temp, _playerTile);
 		 if(movement.get(1).getRow() == _playerTile.getRow() && movement.get(1).getCol() == _playerTile.getCol()){
 			 attack(temp, _playerTile);
