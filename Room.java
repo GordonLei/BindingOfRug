@@ -352,7 +352,7 @@ public void move(Tile origin, Tile destination){
 			destination.setType("empty");
 			return;
 		}
-		else{
+		if (input.equals('y')){
 			getPlayer().pickUp(item);//replace this with the item
 		}
 
