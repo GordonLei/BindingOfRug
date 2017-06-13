@@ -122,7 +122,11 @@ public class Player extends Creature{
 				}
 				break;
 		}
-		BindingOfRug._currentRoom.checkDeath(BindingOfRug._currentRoom.getPlayerTile());
+		if(_health<=0){
+			System.out.println("RIP YOU DEADED");
+			System.out.println("GAME OVER");
+			throw new BindingOfRugException("RIPERINO IN PEPPERONI GAEM OVAR");
+		}
 	}
 
 	public void remove(int slot){
