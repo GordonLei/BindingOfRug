@@ -347,12 +347,12 @@ public void move(Tile origin, Tile destination){
 			}
 			input = s.next();
 		}
-		if (input.equals('n')){
+		if (input.equals("n")){
 			System.out.println("You dropped the item");
 			destination.setType("empty");
 			return;
 		}
-		if (input.equals('y')){
+		else{
 			getPlayer().pickUp(item);//replace this with the item
 		}
 
