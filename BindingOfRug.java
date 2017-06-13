@@ -51,6 +51,7 @@ public class BindingOfRug{
 						speedcounter--;
 					}
 					_currentRoom.monsterRR();
+					_currentRoom.monsterRR();
 					if(_currentRoom.checkMonsterClear()){
 						_currentRoom.setDone(true);
 					}
