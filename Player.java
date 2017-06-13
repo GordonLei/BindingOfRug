@@ -150,10 +150,10 @@ public class Player extends Creature{
 					_health-=effect.getPower()*25*_inventory[slot].getLevel();
 					break;
 				case "ATK":
-					_attack-=effect.getPower()*10*_inventory[slot].getLevel();
+					_attack-=effect.getPower()*5*_inventory[slot].getLevel();
 					break;
 				case "THRN":
-					_thorn-=effect.getPower()*10*_inventory[slot].getLevel();
+					_thorn-=effect.getPower()*5*_inventory[slot].getLevel();
 					break;
 			}
 		}
