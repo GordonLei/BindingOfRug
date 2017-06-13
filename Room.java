@@ -491,11 +491,11 @@ public void monsterRR(){
 		 if(movement.get(1).getRow() == _playerTile.getRow() && movement.get(1).getCol() == _playerTile.getCol()){
 			 attack(temp, _playerTile);
 		 }
-		 else if(!(temp.getRow() == _playerTile.getRow()) && !(temp.getCol() == _playerTile.getCol())){
+		 else {
 			monstermove(temp, movement.get(1));
 			temp = movement.get(1);
 	 }
- 	_monsterTileQueue.enqueue(temp);
+	 if(!(temp.getEntity() == null)) _monsterTileQueue.enqueue(temp);
 	 }
         }
 /*public void askMonsterMove(Tile _monsterTile){
@@ -520,27 +520,29 @@ public LinkedList<Tile> pathfind(Tile origin, Tile destination){
             Tile left = _room[temp.getRow()][temp.getCol()-1];
             Tile down = _room[temp.getRow()+1][temp.getCol()];
             Tile right = _room[temp.getRow()][temp.getCol()+1];
-	if(findLL(closedList, down) == -1){
-		if(down.getmanhattanDist(destination) != 1000){
-		min = down.getmanhattanDist(destination);
-                temp = down;
-		}
-	}
-            if(findLL(closedList, left) == -1 && left.getmanhattanDist(destination) <= min){
-		//System.out.println("lt" + left.getmanhattanDist(destination));
+		min = temp.getmanhattanDist(destination);
+  if(findLL(closedList, left) == -1 && left.getmanhattanDist(destination) <= min){
+		System.out.println("lt" + left.getmanhattanDist(destination));
 		if(left.getmanhattanDist(destination) != 1000){
                 min = left.getmanhattanDist(destination);
                 temp = left;
 		}
+	}
+		if(findLL(closedList, down) == -1 && down.getmanhattanDist(destination) <= min){
+//System.out.println("lt" + left.getmanhattanDist(destination));
+			if(down.getmanhattanDist(destination) != 1000){
+							min = down.getmanhattanDist(destination);
+							temp = down;
+						}
             }
-            if(findLL(closedList, up) == -1 && up.getmanhattanDist(destination) <= min){
+  if(findLL(closedList, up) == -1 && up.getmanhattanDist(destination) <= min){
 		//System.out.println("up" + up.getmanhattanDist(destination));
 		if(up.getmanhattanDist(destination) != 1000){
 		min = up.getmanhattanDist(destination);
               	temp = up;
 		}
             }
-            if(findLL(closedList, right) == -1 && right.getmanhattanDist(destination) <= min){
+  if(findLL(closedList, right) == -1 && right.getmanhattanDist(destination) <= min){
 		//System.out.println("rt" + right.getmanhattanDist(destination));
 		if(right.getmanhattanDist(destination) != 1000){
 	     	min = right.getmanhattanDist(destination);
@@ -549,10 +551,10 @@ public LinkedList<Tile> pathfind(Tile origin, Tile destination){
             }
             closedList.add(temp);
 		if(closedList.size() > 30) break;
-		/*for(Tile x : closedList){
+		for(Tile x : closedList){
 			System.out.println(x.getRow() + "," + x.getCol());
 						}
-			System.out.println("__________________");*/
+			System.out.println("__________________");
 
 
 						//System.out.println(min);
@@ -560,6 +562,7 @@ public LinkedList<Tile> pathfind(Tile origin, Tile destination){
           }
           return closedList;
         }
+
 
 public ArrayQueue<Monster> getMonsters(){
 	return _monsterQueue;
