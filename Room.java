@@ -166,6 +166,12 @@ public class Room implements Comparable{
 	public Player getPlayer(){
 		return (Player) (_playerTile.getEntity());
 	}
+	
+	//get player's tile
+	public Tile getPlayerTile(){
+		return _playerTile;	
+	}
+	
 	//update the current Player stats into the room.
 	public void updatePlayer(Player player){
 		_player = player;
