@@ -113,7 +113,7 @@ public class Player extends Creature{
 							_health+=effect.getPower()*25*newItem.getLevel();
 							break;
 						case "THRN":
-							_thorn+=effect.getPower()*10*newItem.getLevel();
+							_thorn+=effect.getPower()*5*newItem.getLevel();
 							break;
 					}
 				}
