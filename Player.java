@@ -122,6 +122,7 @@ public class Player extends Creature{
 				}
 				break;
 		}
+		BindingOfRug._currentRoom.checkDeath(BindingOfRug._currentRoom._playerTile);
 	}
 
 	public void remove(int slot){
