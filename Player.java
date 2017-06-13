@@ -1,3 +1,5 @@
+import lib.*;
+
 public class Player extends Creature{
 	//instance variables
 	private static int _health, _speed, _attack, _thorn;
