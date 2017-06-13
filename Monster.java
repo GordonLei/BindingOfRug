@@ -6,7 +6,7 @@ public class Monster extends Creature{
         //constructor for default monster
         public Monster(){
                 _health = 20*BindingOfRug._floorNumber;
-                _speed = 1;
+                _speed = 2;
                 _attack = 10*BindingOfRug._floorNumber;
                 _char = "M";
         }
