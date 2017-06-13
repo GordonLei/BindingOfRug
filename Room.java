@@ -484,16 +484,19 @@ public boolean checkMonsterClear(){
 }
 
 public void monsterRR(){
-        	 for(int i = 0; i < _monsterTileQueue.size(); i++){
-        		 Tile temp = _monsterTileQueue.dequeue();
-			 //System.out.println("Servicing monster at" + temp.getRow() + "," + temp.getCol() + "size" + _monsterTileQueue.size());
-			 if(!(temp.getRow() == _playerTile.getRow()) && !(temp.getCol() == _playerTile.getCol())){
-				LinkedList<Tile> movement = pathfind(temp, _playerTile);
-	           		monstermove(temp, movement.get(1));
-				temp = movement.get(1);
-			 }
-		 	_monsterTileQueue.enqueue(temp);
-        	 }
+	 for(int i = 0; i < _monsterTileQueue.size(); i++){
+		 Tile temp = _monsterTileQueue.dequeue();
+		 System.out.println("Servicing monster at" + temp.getRow() + "," + temp.getCol() + "size" + _monsterTileQueue.size());
+		 LinkedList<Tile> movement = pathfind(temp, _playerTile);
+		 if(movement.get(1).getRow() == _playerTile.getRow() && movement.get(1).getCol() == _playerTile.getCol()){
+			 attack(temp, _playerTile);
+		 }
+		 else if(!(temp.getRow() == _playerTile.getRow()) && !(temp.getCol() == _playerTile.getCol())){
+			monstermove(temp, movement.get(1));
+			temp = movement.get(1);
+	 }
+ 	_monsterTileQueue.enqueue(temp);
+	 }
         }
 /*public void askMonsterMove(Tile _monsterTile){
           LinkedList<Tile> movement = pathfind(_monsterTile, _playerTile);
@@ -512,6 +515,7 @@ public LinkedList<Tile> pathfind(Tile origin, Tile destination){
           int min = 0;
 		Tile temp = closedList.getFirst();
           while(true){
+	  if(temp.getRow() == _playerTile.getRow() && temp.getCol() == _playerTile.getCol()) break;
             Tile up = _room[temp.getRow()-1][temp.getCol()];
             Tile left = _room[temp.getRow()][temp.getCol()-1];
             Tile down = _room[temp.getRow()+1][temp.getCol()];
@@ -549,7 +553,7 @@ public LinkedList<Tile> pathfind(Tile origin, Tile destination){
 			System.out.println(x.getRow() + "," + x.getCol());
 						}
 			System.out.println("__________________");*/
-					if(temp.getRow() == _playerTile.getRow() && temp.getCol() == _playerTile.getCol()) break;
+
 
 						//System.out.println(min);
 						//System.out.println(temp);
